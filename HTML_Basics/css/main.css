@@ -1,1 +1,9 @@
-/*# sourceMappingURL=main.css.map */
+body {
+  background: #f2f2f2;
+  margin: 0;
+  font-family: "Poppins";
+}
+
+.navbar {
+  background: white;
+}/*# sourceMappingURL=main.css.map */
