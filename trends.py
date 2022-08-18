@@ -1,5 +1,7 @@
-import pytrends
+from pytrends.request import TrendReq
 
-pytrends.trending_searches(pn="united_states")
-
-#pytrends.suggestions()
+pytrends = TrendReq(hl='en-US', tz=360)
+kw_list = ["Lewandowski"]
+pytrends.build_payload(kw_list, cat=0, timeframe='today 1-m', geo='US', gprop='')
+print(pytrends.interest_over_time())
+print(pytrends.related_topics())
