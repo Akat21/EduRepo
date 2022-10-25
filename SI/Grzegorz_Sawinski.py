@@ -30,7 +30,7 @@ def capturing(board):
                 if idx1 > idx:
                     if attack(el, idx, el1, idx1) == True:
                         score += 1
-        result.append(score)
+        result.append([score,pos])
     print("Liczba Stanów sprawdzonych: ", cnt)
     return result, cnt
 
@@ -51,9 +51,11 @@ def main():
     data = []
     start1 = time.time()
     board, gen_states1 = board_gen(4, board)
-    print(board)
+    #print(board)
     result, chck_states1 = capturing(board)
-    print(result)
+    for el in result:
+        if el[0] == 0:
+            print(el[1])
     end1 = time.time()
     diff1 = end1 - start1
     print("Czas wykonania: ", diff1)
@@ -62,9 +64,11 @@ def main():
     board = []
     start2 = time.time()
     board, gen_states2 = board_gen(5, board)
-    print(board)
+    #print(board)
     result, chck_states2 = capturing(board)
-    print(result)
+    for el in result:
+        if el[0] == 0:
+            print(el[1])
     end2 = time.time()
     diff2 = end2 - start2
     print("Czas wykonania: ", diff2)
@@ -73,9 +77,11 @@ def main():
     board = []
     start3 = time.time()
     board, gen_states3 = board_gen(6, board)
-    print(board)
+    #print(board)
     result, chck_states3 = capturing(board)
-    print(result)
+    for el in result:
+        if el[0] == 0:
+            print(el[1])
     end3 = time.time()
     diff3 = end3 - start3
     print("Czas wykonania: ", diff3)
@@ -84,9 +90,11 @@ def main():
     board = []
     start4 = time.time()
     board, gen_states4 = board_gen(7, board)
-    print(board)
+    #print(board)
     result, chck_states4 = capturing(board)
-    print(result)
+    for el in result:
+        if el[0] == 0:
+            print(el[1])
     end4 = time.time()
     diff4 = end4 - start4
     print("Czas wykonania: ", diff4)
