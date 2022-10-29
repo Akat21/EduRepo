@@ -16,7 +16,7 @@ def DFS(n, board, result):
             counter += 1
             board.append([''.join(last_el) + str(i)])
             if (len(board[-1][0]) == n):
-                board = check_captures(board)
+                board = DFS_captures(board)
         if len(board) == 0:
                     break
     if len(board) != 0:
@@ -25,8 +25,24 @@ def DFS(n, board, result):
         return DFS(n, board, result)
     else:
         return result, counter
-        
-def check_captures(board):
+
+def BFS(n, board, result):
+    '''Possible boards using BFS'''
+    counter = 0 #TODO
+    if len(board) == 0:
+        for i in range(n):
+            board.append([str(i)])
+            counter += 1
+    while len(board[0][0]) < n:
+        for i in range(n):
+            counter += 1
+            board.append([''.join(board[0]) + str(i)])
+        del board[0]
+        if len(board[0][0]) == n:
+            board, result = BFS_captures(board)
+    return result, counter
+
+def DFS_captures(board):
     '''Check if position is valid then delete the wrong one'''
     for idx, el in enumerate(board[-1][0]):
         if len(board) == 0:
@@ -42,6 +58,25 @@ def check_captures(board):
                 continue
     return board
 
+def BFS_captures(board):
+    '''Check if position is valid'''
+    result = []
+    is_captured = False
+    for pos in board:
+        for idx, el in enumerate(pos[0]):
+            for idx1, el1 in enumerate(pos[0]):
+                if idx1 > idx:
+                    if attack(el, idx, el1, idx1) == True:
+                        is_captured = True
+                        break
+                    else:
+                        is_captured = False
+            if is_captured == True:
+                break
+        if is_captured == False:
+            result.append(pos)
+    return board, result
+
 def attack(qrow, qcolumn, orow, ocolumn):
     '''Check if there is possible capture'''
     if int(qrow) == int(orow):
@@ -53,5 +88,5 @@ def attack(qrow, qcolumn, orow, ocolumn):
     else:
         return False
 
-board_1, counter = DFS(4,board,result)
+board_1, counter = BFS(5,board,result)
 print(board_1, "\nLiczba stanów wygenerowanych:", counter)
