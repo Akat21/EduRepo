@@ -1,5 +1,7 @@
-board = []
-result = []
+import numpy as np
+import matplotlib.pyplot as plt
+import time
+
 ###inteligentne - sprawdzanie bic zawsze
 
 def DFS(n, board, result):
@@ -74,7 +76,7 @@ def BFS_captures(board):
             if is_captured == True:
                 break
         if is_captured == False:
-            result.append(pos)
+            result.append(pos[0])
     return board, result
 
 def attack(qrow, qcolumn, orow, ocolumn):
@@ -88,5 +90,37 @@ def attack(qrow, qcolumn, orow, ocolumn):
     else:
         return False
 
-board_1, counter = BFS(5,board,result)
-print(board_1, "\nLiczba stanów wygenerowanych:", counter)
+def DFS_Stats(x,y):
+    for n in range(x,y):
+        board = []
+        result = []
+
+        start1 = time.time()
+        board_1, counter = DFS(n,board,result)
+        print("\nDFS n:",n,"\nWynik:", board_1, "\nLiczba stanów wygenerowanych:", counter)
+        end1 = time.time()
+        print("Czas wykonania:", end1 - start1)
+
+def BFS_DFS_Comparision(x, y):
+    for n in range(x,y):
+
+        board = []
+        result = []
+
+        start1 = time.time()
+        board_1, counter = BFS(n,board,result)
+        print("\nBFS n:",n,"\nWynik:", board_1, "\nLiczba stanów wygenerowanych:", counter)
+        end1 = time.time()
+        print("Czas wykonania:", end1 - start1)
+
+        board = []
+        result = []
+
+        start1 = time.time()
+        board_1, counter = DFS(n,board,result)
+        print("\nDFS n:",n,"\nWynik:", board_1, "\nLiczba stanów wygenerowanych:", counter)
+        end1 = time.time()
+        print("Czas wykonania:", end1 - start1)
+
+DFS_Stats(4,11)
+#BFS_DFS_Comparision(4,8)
