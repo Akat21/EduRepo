@@ -61,9 +61,8 @@ def BFS_captures(board):
     result.append(board[-1][0])
     return board, result
 
-def DFS(n, board, result):
+def DFS(n, board, result, counter = 0):
     '''Possible boards using DFS'''
-    counter = 0
     if len(board) == 0:
         for i in range(n):
             board.append([str(i)])
@@ -81,14 +80,16 @@ def DFS(n, board, result):
     if len(board) != 0:
         result.append(board[-1][0])
         del board[-1]
-        return DFS(n, board, result)
+        if len(board) != 0:
+            return DFS(n, board, result, counter)
+        else:
+            return result, counter
     else:
         return result, counter
 
 
-def Intel_DFS(n, board, result):
+def Intel_DFS(n, board, result, counter = 0):
     '''Possible boards using DFS'''
-    counter = 0
     if len(board) == 0:
         for i in range(n):
             board.append([str(i)])
@@ -105,7 +106,10 @@ def Intel_DFS(n, board, result):
     if len(board) != 0:
         result.append(board[-1][0])
         del board[-1]
-        return Intel_DFS(n, board, result)
+        if len(board) != 0:
+            return Intel_DFS(n, board, result, counter)
+        else:
+            return result, counter
     else:
         return result, counter
 
@@ -168,13 +172,29 @@ def BFS_DFS_Comparision(x, y):
         end1 = time.time()
         print("Czas wykonania:", end1 - start1)
 
+def BFS_DFS_Intelligent_Comparision(x, y):
+    for n in range(x,y):
+
+        board = []
+        result = []
+
+        start1 = time.time()
+        board_1, counter = Intel_BFS(n,board,result)
+        print("\nBFS n:",n,"\nWynik:", board_1, "\nLiczba stanów wygenerowanych:", counter)
+        end1 = time.time()
+        print("Czas wykonania:", end1 - start1)
+
+        board = []
+        result = []
+
+        start1 = time.time()
+        board_1, counter = Intel_DFS(n,board,result)
+        print("\nDFS n:",n,"\nWynik:", board_1, "\nLiczba stanów wygenerowanych:", counter)
+        end1 = time.time()
+        print("Czas wykonania:", end1 - start1)
+
+
 board = []
 result = []
 
-print(Intel_BFS(4,board,result))
-board = []
-result = []
-
-print(BFS(4,board,result))
-#DFS_Stats(4,11)
-#BFS_DFS_Comparision(4,8)
+print(BFS_DFS_Intelligent_Comparision(4, 9))
