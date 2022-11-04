@@ -268,4 +268,6 @@ def BFS_DFS_Intelligent_Comparision(x, y):
 board = []
 result = []
 
+#print(DFS_Stats)
+#print(BFS_DFS_Comparision)
 print(BFS_DFS_Intelligent_Comparision(4, 10))
