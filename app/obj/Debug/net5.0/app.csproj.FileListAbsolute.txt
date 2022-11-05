@@ -1,0 +1,16 @@
+C:\Users\sawin\repo\app\bin\Debug\net5.0\app.exe
+C:\Users\sawin\repo\app\bin\Debug\net5.0\app.deps.json
+C:\Users\sawin\repo\app\bin\Debug\net5.0\app.runtimeconfig.json
+C:\Users\sawin\repo\app\bin\Debug\net5.0\app.runtimeconfig.dev.json
+C:\Users\sawin\repo\app\bin\Debug\net5.0\app.dll
+C:\Users\sawin\repo\app\bin\Debug\net5.0\app.pdb
+C:\Users\sawin\repo\app\obj\Debug\net5.0\app.csproj.AssemblyReference.cache
+C:\Users\sawin\repo\app\obj\Debug\net5.0\app.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sawin\repo\app\obj\Debug\net5.0\app.AssemblyInfoInputs.cache
+C:\Users\sawin\repo\app\obj\Debug\net5.0\app.AssemblyInfo.cs
+C:\Users\sawin\repo\app\obj\Debug\net5.0\app.csproj.CoreCompileInputs.cache
+C:\Users\sawin\repo\app\obj\Debug\net5.0\app.dll
+C:\Users\sawin\repo\app\obj\Debug\net5.0\refint\app.dll
+C:\Users\sawin\repo\app\obj\Debug\net5.0\app.pdb
+C:\Users\sawin\repo\app\obj\Debug\net5.0\app.genruntimeconfig.cache
+C:\Users\sawin\repo\app\obj\Debug\net5.0\ref\app.dll
