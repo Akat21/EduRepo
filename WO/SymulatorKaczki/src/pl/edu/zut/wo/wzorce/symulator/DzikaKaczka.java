@@ -1,10 +1,11 @@
 package pl.edu.zut.wo.wzorce.symulator;
 
 public class DzikaKaczka extends Kaczka {
-	DzikaKaczka(){
+	public DzikaKaczka(){
 		latanieInt = new LatamBoMamSkrzydla();
-		kwakanieInt = new Piszcz();
+		kwakanieInt = new Kwacz();
 	}
+	
 	public void wyświetl(){
 		System.out.println("Wygląda jak dzika kaczka");
 	}
