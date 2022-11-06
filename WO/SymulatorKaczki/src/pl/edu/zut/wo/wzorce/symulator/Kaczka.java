@@ -13,14 +13,24 @@ public class Kaczka extends ModelKaczki{
     };
 
     public void wykonajKwacz(){
-        kwakanieInt.kwacz();
+        try{
+            kwakanieInt.kwacz();
+        }
+        catch(Exception e){
+            System.out.println("Przypisz Kwakanie!");
+        }
     };
 
     public void wykonajLeć(){
-        latanieInt.leć();
+        try{
+            latanieInt.leć();
+        }
+        catch(Exception e){
+            System.out.println("Przypisz Latanie!");
+        }
     };
     
-    void pływaj() {
+    public void pływaj() {
     	System.out.println("Pływam jak kaczka.");
     };
 

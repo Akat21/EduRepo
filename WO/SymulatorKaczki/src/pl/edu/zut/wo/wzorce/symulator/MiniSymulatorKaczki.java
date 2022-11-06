@@ -11,7 +11,7 @@ public class MiniSymulatorKaczki {
 		gumowa.wyświetl();
 		gumowa.wykonajKwacz();
 		gumowa.wykonajLeć();
-		ModelKaczki kaczka = new GumowaKaczka();
+		ModelKaczki kaczka = new Kaczka();
 		kaczka.wyświetl();
 		kaczka.ustawLećInt(new LatamBoMamSkrzydla());
 		kaczka.wykonajLeć();
