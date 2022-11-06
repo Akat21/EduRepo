@@ -1,6 +1,9 @@
 package pl.edu.zut.wo.wzorce.pogodynka.wyświetl;
 
-public class StatystykaWyświetlanie {
+import pl.edu.zut.wo.wzorce.pogodynka.Obserwator;
+import pl.edu.zut.wo.wzorce.pogodynka.WyświetlElement;
+
+public class StatystykaWyświetlanie implements Obserwator, WyświetlElement {
 
 	private float temperatura;
 	private float wilgotność;
