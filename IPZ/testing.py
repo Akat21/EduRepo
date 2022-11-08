@@ -2,16 +2,17 @@ import cv2
 import mediapipe as mp
 import time
 import HandTrackingModule as htm
+import PoseEstimationModule as pem
 
 def main():
     pTime = 0
 
     cap = cv2.VideoCapture(0)
-    detector = htm.handDetector()
+    detector = pem.poseDetector()
 
     while True:
         success, img = cap.read()
-        img = detector.findHands(img)
+        img = detector.findPose(img)
         lmList = detector.findPosition(img)
         if len(lmList) != 0:
             print(lmList[4])
