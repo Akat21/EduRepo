@@ -27,7 +27,7 @@ public class WegetariańskaPizza extends Pizza {
 			sos = fabrykaSkładników.utwórzSos(new SosPomidorowy());
 			Ser[] sery = {new SerParmezan(), new SerMozzarella()};
 			ser = fabrykaSkładników.utwórzSer(sery);
-			Warzywa[] warzywka = {new Oregano(), new Bakłażan(), new Szpinak(), new CzarneOliwki()};
+			Warzywa[] warzywka = {new Bakłażan(), new Szpinak(), new CzarneOliwki()};
 			warzywa = fabrykaSkładników.utwórzWarzywa(warzywka);
 		} 
 	}
