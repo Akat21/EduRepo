@@ -2,11 +2,8 @@ package pl.edu.zut.wo.wzorce.pizzeria;
 
 import pl.edu.zut.wo.wzorce.pizzeria.fabryka.FabrykaSkładnikówPizzy;
 import pl.edu.zut.wo.wzorce.pizzeria.fabryka.WłoskaFabrykaSkładnikówPizzy;
-import pl.edu.zut.wo.wzorce.pizzeria.pizza.OwoceMorzaPizza;
-import pl.edu.zut.wo.wzorce.pizzeria.pizza.PepperoniPizza;
-import pl.edu.zut.wo.wzorce.pizzeria.pizza.Pizza;
-import pl.edu.zut.wo.wzorce.pizzeria.pizza.SerowaPizza;
-import pl.edu.zut.wo.wzorce.pizzeria.pizza.WegetariańskaPizza;
+import pl.edu.zut.wo.wzorce.pizzeria.pizza.*;
+
 
 public class WłoskaPizzeria extends Pizzeria {
 	protected Pizza utwórzPizza(String item) {

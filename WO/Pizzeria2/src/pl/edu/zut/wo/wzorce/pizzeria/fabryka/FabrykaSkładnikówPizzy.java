@@ -1,22 +1,17 @@
 package pl.edu.zut.wo.wzorce.pizzeria.fabryka;
 
-import pl.edu.zut.wo.wzorce.pizzeria.składniki.Ciasto;
-import pl.edu.zut.wo.wzorce.pizzeria.składniki.Małże;
-import pl.edu.zut.wo.wzorce.pizzeria.składniki.Pepperoni;
-import pl.edu.zut.wo.wzorce.pizzeria.składniki.Ser;
-import pl.edu.zut.wo.wzorce.pizzeria.składniki.Sos;
-import pl.edu.zut.wo.wzorce.pizzeria.składniki.Warzywa;
+import pl.edu.zut.wo.wzorce.pizzeria.składniki.*;
 
 public interface FabrykaSkładnikówPizzy {
-	public Ciasto utwórzCiasto();
+	public Ciasto utwórzCiasto(Ciasto obj);
 
-	public Sos utwórzSos();
+	public Sos utwórzSos(Sos obj);
 
-	public Ser utwórzSer();
+	public Ser[] utwórzSer(Ser obj[]);
 
-	public Warzywa[] utwórzWarzywa();
+	public Warzywa[] utwórzWarzywa(Warzywa[] obj);
 
-	public Pepperoni utwórzPepperoni();
+	public Pepperoni utwórzPepperoni(Pepperoni obj);
 
-	public Małże utwórzMałże();
+	public Małże utwórzMałże(Małże obj);
 }
