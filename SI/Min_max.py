@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
-board = ['o', 'x', 'o', ' ', ' ', 'x', ' ', 'o', 'x']
+board = [' ', 'o', 'o', ' ', 'x', ' ', 'x', ' ', ' ']
 
 def printBoard(board):
     print(board[0] + "|" + board[1] + "|" + board[2])
@@ -37,7 +37,7 @@ def CheckWin(board, mark):
     else:
         return False
 
-def max_value(board):
+def max_value(board, alfa , beta):
     #Return score
     if CheckWin(board, 'o') == True: 
         return -1
@@ -60,11 +60,15 @@ def max_value(board):
     ################
 
     for el in t:
-        v = max(v, min_value(el))
+        v = max(v, min_value(el, alfa, beta))
+        alfa = max(alfa, v)
+        print("alfa", alfa)
+        if alfa >= beta:
+            return v
     return v
 
 
-def min_value(board):
+def min_value(board, alfa, beta):
     #Return score
     if CheckWin(board,'x') == True:
         return 1
@@ -87,21 +91,27 @@ def min_value(board):
     ################
 
     for el in t:
-        v = min(v, max_value(el))
+        v = min(v, max_value(el, alfa, beta))
+        beta = min(beta, v)
+        print(el,"beta",beta)
+        if alfa >= beta:
+            return v
     return v
 
-print("Jeżeli jest ruch O to: ")
-if min_value(board) == -1:
-    print("O wygrywa!")
-elif min_value(board) == 1:
-    print("X wygrywa!")
-else:
-    print("Remis!")
+# print("Jeżeli jest ruch O to: ")
+# if min_value(board) == -1:
+#     print("O wygrywa!")
+# elif min_value(board) == 1:
+#     print("X wygrywa!")
+# else:
+#     print("Remis!")
 
-print("Jeżeli jest ruch X to: ")
-if max_value(board) == 1:
-    print("O wygrywa!")
-elif max_value(board) == -1:
-    print("X wygrywa!")
-else:
-    print("Remis!")
+# print("Jeżeli jest ruch X to: ")
+# if max_value(board) == 1:
+#     print("O wygrywa!")
+# elif max_value(board) == -1:
+#     print("X wygrywa!")
+# else:
+#     print("Remis!")
+
+print(min_value(board, -1, 1))
