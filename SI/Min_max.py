@@ -62,7 +62,6 @@ def max_value(board, alfa , beta):
     for el in t:
         v = max(v, min_value(el, alfa, beta))
         alfa = max(alfa, v)
-        print("alfa", alfa)
         if alfa >= beta:
             return v
     return v
@@ -93,7 +92,6 @@ def min_value(board, alfa, beta):
     for el in t:
         v = min(v, max_value(el, alfa, beta))
         beta = min(beta, v)
-        print(el,"beta",beta)
         if alfa >= beta:
             return v
     return v
