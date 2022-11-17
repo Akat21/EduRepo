@@ -1,4 +1,4 @@
-from easyAI import TwoPlayerGame, solve_with_iterative_deepening, Human_Player, AI_Player, Negamax
+from easyAI import TwoPlayerGame, solve_with_iterative_deepening, Human_Player, AI_Player, Negamax, SSS, DUAL
 
 class LastCoin(TwoPlayerGame):
     def __init__(self, players = None):
@@ -33,3 +33,6 @@ if __name__ == "__main__":
             print(f"Pobrano ze stosu {i[1]} monet")
         except:
             print("Zostało 0 monet")
+
+    # result, depth, move = solve_with_iterative_deepening(game = LastCoin(), ai_depths=range(2,20), win_score=100)
+    # print(f"Głebokość przeszukiwania z sukcesem {depth}, Gracz dostał nagrodę {result}, Wybrany ruch: {move}")
