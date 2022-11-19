@@ -16,7 +16,6 @@ public class CzekoladowyKocioł {
 		if (unikalnaInstancja == null){
 			unikalnaInstancja = new CzekoladowyKocioł();
 		}
-
 		return unikalnaInstancja;
 	}
 

@@ -1,23 +1,19 @@
-package pl.edu.zut.wo.wzorce.fabryka_czekolady.singleton.synchro;
+package pl.edu.zut.wo.wzorce.fabryka_czekolady.singleton.jbloch;
 
-public class CzekoladowyKocioł {
+public enum CzekoladowyKocioł {
+	INSTANCE;
 	private boolean pusty;
 	private boolean ugotowany;
-
-	private static CzekoladowyKocioł unikalnaInstancja = null;
+	// private static CzekoladowyKocioł unikalnaInstancja = new CzekoladowyKocioł();
 
 	private CzekoladowyKocioł() {
-		pusty = true;
-		ugotowany = false;
+		this.pusty = true;
+		this.ugotowany = false;
 		System.out.println("Utworzenie instancji Czekoladowego Kotła: " + this);
 	}
 
-	public static synchronized CzekoladowyKocioł pobierzInstancje(){
-		if (unikalnaInstancja == null){
-			unikalnaInstancja = new CzekoladowyKocioł();
-		}
-
-		return unikalnaInstancja;
+	public static CzekoladowyKocioł pobierzInstancje(){
+		return INSTANCE;
 	}
 
 	public void napełniaj() {

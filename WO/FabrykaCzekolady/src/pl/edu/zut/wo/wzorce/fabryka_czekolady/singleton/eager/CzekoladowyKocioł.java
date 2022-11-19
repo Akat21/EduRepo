@@ -1,10 +1,10 @@
-package pl.edu.zut.wo.wzorce.fabryka_czekolady.singleton.synchro;
+package pl.edu.zut.wo.wzorce.fabryka_czekolady.singleton.eager;
 
 public class CzekoladowyKocioł {
 	private boolean pusty;
 	private boolean ugotowany;
 
-	private static CzekoladowyKocioł unikalnaInstancja = null;
+	private static CzekoladowyKocioł unikalnaInstancja = new CzekoladowyKocioł();
 
 	private CzekoladowyKocioł() {
 		pusty = true;
@@ -13,10 +13,6 @@ public class CzekoladowyKocioł {
 	}
 
 	public static synchronized CzekoladowyKocioł pobierzInstancje(){
-		if (unikalnaInstancja == null){
-			unikalnaInstancja = new CzekoladowyKocioł();
-		}
-
 		return unikalnaInstancja;
 	}
 
