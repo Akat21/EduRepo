@@ -1,5 +1,6 @@
 from easyAI import TwoPlayerGame
 from easyAI.Player import Human_Player
+from easyAI import TranspositionTable, solve_with_iterative_deepening
 
 class TicTacToe(TwoPlayerGame):
     """The board positions are numbered as follows:
@@ -8,7 +9,7 @@ class TicTacToe(TwoPlayerGame):
     7 8 9
     """
 
-    def __init__(self, players):
+    def __init__(self, players = None):
         self.players = players
         self.board = [0 for i in range(9)]
         self.current_player = 1  # player 1 starts.
@@ -61,7 +62,15 @@ class TicTacToe(TwoPlayerGame):
 if __name__ == "__main__":
 
     from easyAI import AI_Player, Negamax, SSS, DUAL
-
-    ai_algo1 = DUAL(10)
-    ai_algo2 = SSS(5)
-    TicTacToe([AI_Player(ai_algo1), AI_Player(ai_algo2)]).play()
+    tt = TranspositionTable()
+    TicTacToe.ttentry = lambda game : game.board
+    r, d, m = solve_with_iterative_deepening(game = TicTacToe(), ai_depths=range(2,20), win_score=100, tt = tt)
+    ai_algo1 = SSS(10)
+    ai_algo2 = Negamax(5)
+    game = TicTacToe([AI_Player(tt), Human_Player()])
+    game.play()
+    # for i in history:
+    #     try:
+    #         print(f'Zagrano {i[1]}')
+    #     except:
+    #         print("Koniec")

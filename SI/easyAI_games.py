@@ -1,4 +1,4 @@
-from easyAI import TwoPlayerGame, solve_with_iterative_deepening, Human_Player, AI_Player, Negamax, SSS, DUAL
+from easyAI import TwoPlayerGame, solve_with_iterative_deepening, Human_Player, AI_Player, Negamax, SSS, DUAL, TranspositionTable
 
 class LastCoin(TwoPlayerGame):
     def __init__(self, players = None):
@@ -25,14 +25,21 @@ class LastCoin(TwoPlayerGame):
     
 
 if __name__ == "__main__":
-    ai = Negamax(10)
-    game = LastCoin([Human_Player(), AI_Player(ai)])
-    history = game.play()
-    for i in history:
-        try:
-            print(f"Pobrano ze stosu {i[1]} monet")
-        except:
-            print("Zostało 0 monet")
+    # ai = Negamax(10)
+    # game = LastCoin([Human_Player(), AI_Player(ai)])
+    # history = game.play()
+    # for i in history:
+    #     try:
+    #         print(f"Pobrano ze stosu {i[1]} monet")
+    #     except:
+    #         print("Zostało 0 monet")
 
-    # result, depth, move = solve_with_iterative_deepening(game = LastCoin(), ai_depths=range(2,20), win_score=100)
-    # print(f"Głebokość przeszukiwania z sukcesem {depth}, Gracz dostał nagrodę {result}, Wybrany ruch: {move}")
+    # # result, depth, move = solve_with_iterative_deepening(game = LastCoin(), ai_depths=range(2,20), win_score=100)
+    # # print(f"Głebokość przeszukiwania z sukcesem {depth}, Gracz dostał nagrodę {result}, Wybrany ruch: {move}")
+    tt = TranspositionTable()
+    LastCoin.ttentry = lambda game : game.num_coins
+    r, d, m = solve_with_iterative_deepening(game = LastCoin(), ai_depths=range(2,20), win_score=100, tt = tt)
+    ai_algo1 = SSS(10)
+    ai_algo2 = Negamax(5)
+    game = LastCoin([AI_Player(tt), Human_Player()])
+    game.play()
