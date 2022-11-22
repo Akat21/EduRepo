@@ -11,3 +11,5 @@ if (x > 0){
     console.log("Im pro");
 }
 console.log(add(x));
+var myobj = {age:12, name:"Tony"}
+console.log(myobj.age);
