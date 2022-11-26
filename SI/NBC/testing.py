@@ -13,4 +13,4 @@ est = KBinsDiscretizer(n_bins = 3)
 X_train, X_test = train_test_split(X)
 
 nbc = NBC()
-nbc.fit(X,y)
+print(nbc.fit(X,y))
