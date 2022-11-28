@@ -9,14 +9,38 @@ class NBC(BaseEstimator, ClassifierMixin):
         pass
 
     def fit(self, X, y):
-        '''First element = type, Second element = probability'''
+        '''First element = type, Second element = occurances, Third elemnt = probability'''
         P_Y = self.Single_Prob(y)
-        return P_Y
+        P_X_Y = []
+        cnt = 0
+        for el in range(len(P_Y)):
+            P_X = self.Multi_Prob(X, cnt, P_Y[el][1])
+            P_X_Y_temp = []
+            for col in range(len(P_X)):
+                prob = []
+                for i in range(len(P_X[col])):
+                    prob.append([P_X[col][i][0], (P_X[col][i][1] * P_Y[el][2])/P_Y[el][2]])
+                P_X_Y_temp.append(prob)
+            P_X_Y.extend(P_X_Y_temp)
+            cnt += P_Y[el][1]
+        return P_Y, P_X_Y
 
     def Single_Prob(self, y):
         P_cnt = collections.Counter(y)
         x = list(dict(P_cnt).keys())
         P = []
         for el in x:
-            P.append([int(el),dict(P_cnt)[el]/sum(P_cnt.values())])
+            P.append([int(el), dict(P_cnt)[el], dict(P_cnt)[el]/sum(P_cnt.values())])
         return P
+
+    def Multi_Prob(self, X, begin, end):
+        '''Returns probability (first dimension is first column etc)'''
+        P_final = []
+        for row in range(len(X[0])):
+            P_cnt = collections.Counter(X[begin:end,row])
+            x = list(dict(P_cnt).keys())
+            P = []
+            for el in x:
+                P.append([el,dict(P_cnt)[el]/sum(P_cnt.values())])
+            P_final.append(P)
+        return P_final
