@@ -11,20 +11,23 @@ class NBC(BaseEstimator, ClassifierMixin):
     def fit(self, X, y):
         '''First element = type, Second element = occurances, Third elemnt = probability'''
         P_Y = self.Single_Prob(y)
-        P_X_Y = []
-        cnt = 0
-        for el in range(len(P_Y)):
-            P_X = self.Multi_Prob(X, cnt, P_Y[el][1])
-            P_X_Y_temp = []
-            for col in range(len(P_X)):
-                prob = []
-                for i in range(len(P_X[col])):
-                    prob.append([P_X[col][i][0], (P_X[col][i][1] * P_Y[el][2])/P_Y[el][2]])
-                P_X_Y_temp.append(prob)
-            P_X_Y.extend(P_X_Y_temp)
-            cnt += P_Y[el][1]
+        P_X_Y = self.Condi_Prob(X, P_Y)
+        # cnt = 0
+        # for el in range(len(P_Y)):
+        #     P_X = self.Multi_Prob(X, cnt, P_Y[el][1])
+        #     P_X_Y_temp = []
+        #     for col in range(len(P_X)):
+        #         prob = []
+        #         for i in range(len(P_X[col])):
+        #             prob.append([P_X[col][i][0], (P_X[col][i][1] * P_Y[el][2])/P_Y[el][2]])
+        #         P_X_Y_temp.append(prob)
+        #     P_X_Y.extend(P_X_Y_temp)
+        #     cnt += P_Y[el][1]
         return P_Y, P_X_Y
 
+    def predict(self, P_Y, P_X_Y):
+        pass
+    
     def Single_Prob(self, y):
         P_cnt = collections.Counter(y)
         x = list(dict(P_cnt).keys())
@@ -33,14 +36,11 @@ class NBC(BaseEstimator, ClassifierMixin):
             P.append([int(el), dict(P_cnt)[el], dict(P_cnt)[el]/sum(P_cnt.values())])
         return P
 
-    def Multi_Prob(self, X, begin, end):
+    def Condi_Prob(self, X, y):
         '''Returns probability (first dimension is first column etc)'''
         P_final = []
-        for row in range(len(X[0])):
-            P_cnt = collections.Counter(X[begin:end,row])
-            x = list(dict(P_cnt).keys())
-            P = []
-            for el in x:
-                P.append([el,dict(P_cnt)[el]/sum(P_cnt.values())])
-            P_final.append(P)
+        el = self.Single_Prob(X[:,0])
+        for y_el_num in range(len(y)):
+            for X_el_num in range(len(el)):
+                P_final.append([y[y_el_num][0], el[X_el_num][0], (y[y_el_num][2] * el[X_el_num][2])/y[y_el_num][2]]) #1 el - y(wartość 1 - 3), 2 el - X(wartość 1 - 3 po dyskretyzacji), 3 - prawdopodobienstwo warunkowe
         return P_final
