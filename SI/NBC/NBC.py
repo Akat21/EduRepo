@@ -44,6 +44,6 @@ class NBC(BaseEstimator, ClassifierMixin):
         for y_el_num in range(len(y)):
             P = []
             for X_el_num in range(len(el)):
-                P.append([y[y_el_num][0], el[X_el_num][0], (y[y_el_num][2] * el[X_el_num][2])/y[y_el_num][2]]) #1 el - y(wartość 1 - 3), 2 el - X(wartość 1 - 3 po dyskretyzacji), 3 - prawdopodobienstwo warunkowe
+                P.append([y[y_el_num][0], el[X_el_num][0], (y[y_el_num][2] * el[X_el_num][2])/y[y_el_num][1]]) #1 el - y(wartość 1 - 3), 2 el - X(wartość 1 - 3 po dyskretyzacji), 3 - prawdopodobienstwo warunkowe
             P_final.append(P)
         return P_final
