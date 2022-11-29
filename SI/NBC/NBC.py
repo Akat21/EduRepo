@@ -40,7 +40,10 @@ class NBC(BaseEstimator, ClassifierMixin):
         '''Returns probability (first dimension is first column etc)'''
         P_final = []
         el = self.Single_Prob(X[:,0])
+        #TODO for every column
         for y_el_num in range(len(y)):
+            P = []
             for X_el_num in range(len(el)):
-                P_final.append([y[y_el_num][0], el[X_el_num][0], (y[y_el_num][2] * el[X_el_num][2])/y[y_el_num][2]]) #1 el - y(wartość 1 - 3), 2 el - X(wartość 1 - 3 po dyskretyzacji), 3 - prawdopodobienstwo warunkowe
+                P.append([y[y_el_num][0], el[X_el_num][0], (y[y_el_num][2] * el[X_el_num][2])/y[y_el_num][2]]) #1 el - y(wartość 1 - 3), 2 el - X(wartość 1 - 3 po dyskretyzacji), 3 - prawdopodobienstwo warunkowe
+            P_final.append(P)
         return P_final
