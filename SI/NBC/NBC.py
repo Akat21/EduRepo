@@ -11,7 +11,7 @@ class NBC(BaseEstimator, ClassifierMixin):
     def fit(self, X, y):
         '''First element = type, Second element = occurances, Third elemnt = probability'''
         P_Y = self.Single_Prob(y)
-        P_X_Y = self.Condi_Prob(X, P_Y)
+        P_X_Y = self.Condi_Prob(X, y)
         # cnt = 0
         # for el in range(len(P_Y)):
         #     P_X = self.Multi_Prob(X, cnt, P_Y[el][1])
@@ -38,12 +38,37 @@ class NBC(BaseEstimator, ClassifierMixin):
 
     def Condi_Prob(self, X, y):
         '''Returns probability (first dimension is first column etc)'''
+        P_semifinal = []
         P_final = []
-        el = self.Single_Prob(X[:,0])
-        #TODO for every column
-        for y_el_num in range(len(y)):
-            P = []
-            for X_el_num in range(len(el)):
-                P.append([y[y_el_num][0], el[X_el_num][0], (y[y_el_num][2] * el[X_el_num][2])/y[y_el_num][1]]) #1 el - y(wartość 1 - 3), 2 el - X(wartość 1 - 3 po dyskretyzacji), 3 - prawdopodobienstwo warunkowe
-            P_final.append(P)
+        P_Y = self.Single_Prob(y)
+        print(len(X[0]))
+        for col_num in range(len(X[0])):
+            P_semifinal = []
+            for y_el_num in range(len(P_Y)):
+                P = []
+                P_X = []
+
+                ##Liczymy prawdopodobienstwo wystąpienia estymowanej wartosci X dla kolumny w kazdym estymatorze y(są 3 - 1,2,3)
+                for idx, est in enumerate(y):
+                    if est == P_Y[y_el_num][0]:
+                        P_X.append(X[idx, col_num])
+                P_X = self.Single_Prob(P_X)
+                
+                ##Jeżeli nie ma wszystkich wartości w kolumnie dodajemy kolumne o prawdopodobienstwie 0.0 dla brakujacego elementu
+                est_num = set(X[:,0])
+                for el in P_X:
+                    if el[0] in est_num:
+                        est_num.remove(el[0])
+                if len(list(est_num)) > 0:
+                    P_X.append([int(list(est_num)[0]), 0, 0.0])
+                
+                # print(P_X, list(est_num))
+                # print(P_Y[y_el_num][0])
+
+                ##Liczymy prawdopodobieństwo warunkowe dla każdego elementu i dodajemy do listy P
+                for X_el_num in range(len(P_X)):
+                    P.append([P_Y[y_el_num][0], P_X[X_el_num][0], (P_Y[y_el_num][2] * P_X[X_el_num][2])/P_Y[y_el_num][1]]) #1 el - y(wartość 1 - 3), 2 el - X(wartość 1 - 3 po dyskretyzacji), 3 - prawdopodobienstwo warunkowe
+                
+                P_semifinal.append(P)
+            P_final.append(P_semifinal)
         return P_final
