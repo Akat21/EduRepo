@@ -5,7 +5,16 @@ public class ReadingRecord {
 	int quantity;
 	int month;
 	int year;
+	double baseCharge;
+	double taxableCharge;
+	double basicChargeAmount;
 
+	public void transform(){
+		this.baseCharge = firstMethod();
+		this.taxableCharge = secondMethod();
+		this.basicChargeAmount = thirdMethod();
+	}
+	
 	public static double firstMethod() {
 		ReadingRecord aReading = acquireReading();
 		double baseCharge = baseRate(aReading.month, aReading.year) * aReading.quantity;
