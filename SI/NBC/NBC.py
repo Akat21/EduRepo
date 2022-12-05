@@ -12,10 +12,8 @@ class NBC(BaseEstimator, ClassifierMixin):
         '''First element = type, Second element = occurances, Third elemnt = probability'''
         self.P_Y = self.Single_Prob(y)
         self.P_X_Y = self.Condi_Prob(X, y)
-        return self.P_Y, self.P_X_Y
 
     def predict(self, P_X):
-        print(P_X)
         res = []
         cnt = 0
         for el in P_X:
@@ -37,6 +35,29 @@ class NBC(BaseEstimator, ClassifierMixin):
             res.append(P.index(max(P)) + 1)
         return res
     
+    def predict_proba(self, P_X):
+        res = []
+        cnt = 0
+        for el in P_X:
+            P = []
+            for classi_num in range(1,len(self.P_Y)+1):
+                prob = 1
+                for col in self.P_X_Y:
+                    for classi in col:
+                        if classi[0][0] == classi_num:
+                            for est in classi:
+                                if est[1] == el[cnt]:
+                                    prob *= est[2]
+                                    cnt += 1 
+                                    break
+                            break
+                cnt = 0       
+                prob *= self.P_Y[classi_num - 1][2]
+                P.append(prob)
+            res.append(P)
+        res1 = res[2][2] / (res[2][0] + res[2][1] + res[2][1]) ##dla wszystkich wynikow res obliczyc
+        return res1
+
     def Single_Prob(self, y):
         P_cnt = collections.Counter(y)
         x = list(dict(P_cnt).keys())
@@ -62,7 +83,6 @@ class NBC(BaseEstimator, ClassifierMixin):
                     if est == P_Y[y_el_num][0]:
                         P_X.append(X[idx, col_num])
                 P_X = self.Single_Prob(P_X)
-                print(P_X)
                 
                 ##Jeżeli nie ma wszystkich wartości w kolumnie dodajemy kolumne o prawdopodobienstwie 0.0 dla brakujacego elementu
                 ##nwm czy potrzebne
