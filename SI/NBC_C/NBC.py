@@ -52,8 +52,8 @@ class NBC(BaseEstimator, ClassifierMixin):
                     for classi in col:
                         if classi[0][0] == classi_num:
                             for est in classi:
-                                if str(est[1]) == str(el[cnt]):
-                                    prob *= est[2].astype(np.float64)
+                                if est[1] == el[cnt]:
+                                    prob *= est[2]
                                     cnt += 1 
                                     break
                             break
