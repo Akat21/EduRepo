@@ -9,12 +9,13 @@ X = np.array(pd.read_csv("wine.data"))
 y = X[:,0]
 X = X[:,1:]
 
-est = KBinsDiscretizer(n_bins = 3, encode='ordinal', strategy='uniform').fit(X)
-X = est.transform(X)
+# est = KBinsDiscretizer(n_bins = 3, encode='ordinal', strategy='uniform').fit(X)
+# X = est.transform(X)
+
 with_laplace = []
 without_laplace = []
 
-for i in range(100):
+for i in range(1):
 
     X_train, X_test, y_train, y_test  = train_test_split(X, y, test_size=0.33)
     nbc = NBC()

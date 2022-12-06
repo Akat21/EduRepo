@@ -9,9 +9,8 @@ class NBC(BaseEstimator, ClassifierMixin):
         pass
 
     def fit(self, X, y, LaPlace = False):
-        '''First element = type, Second element = occurances, Third elemnt = probability'''
         self.P_Y = self.Single_Prob(y, LaPlace)
-        self.P_X_Y = self.Condi_Prob(X, y, LaPlace)
+
 
     def accuracy_score(self, X_predict, y_test):
         res_list = X_predict == y_test
@@ -81,40 +80,49 @@ class NBC(BaseEstimator, ClassifierMixin):
                 P.append([el, dict(P_cnt)[el], dict(P_cnt)[el]/sum(P_cnt.values())]) 
         return P
 
-    def Condi_Prob(self, X, y, LaPlace):
-        '''Returns probability (first dimension is first column etc)'''
-        P_semifinal = []
-        P_final = []
-        P_Y = self.Single_Prob(y, LaPlace)
+    def density(self, X, y):
+        pass
 
-        for col_num in range(len(X[0])):
-            P_semifinal = []
-            for y_el_num in range(len(P_Y)):
-                P = []
-                P_X = []
-                
-                ##Liczymy prawdopodobienstwo wystąpienia estymowanej wartosci X dla kolumny w kazdym estymatorze y(są 3 - 1,2,3)
-                for idx, est in enumerate(y):
-                    if est == P_Y[y_el_num][0]:
-                        P_X.append(X[idx, col_num])
-                P_X = self.Single_Prob(P_X, LaPlace)
-                
-                ##Jeżeli nie ma wszystkich wartości w kolumnie dodajemy kolumne o prawdopodobienstwie 0.0 dla brakujacego elementu
-                ##nwm czy potrzebne
+    def std(self, X, y):
+        pass
 
-                est_num = set(X[:,0])
-                for el in P_X:
-                    if el[0] in est_num:
-                        est_num.remove(el[0])
-                if len(list(est_num)) > 0:
-                    for el in list(est_num):
-                        P_X.append([int(el), 0, 0.0])
+    def mean(self, X, y):
+        pass
+    
+    # def Condi_Prob(self, X, y, LaPlace):
+    #     '''Returns probability (first dimension is first column etc)'''
+    #     P_semifinal = []
+    #     P_final = []
+    #     P_Y = self.Single_Prob(y, LaPlace)
 
-                ##Liczymy prawdopodobieństwo warunkowe dla każdego elementu i dodajemy do listy P
-                ## Dzielenie przez P_Y to liczba występowania y czy jego prawdopodobienstwo??? ( jako liczba wystepowania nie dziala)
-                for X_el_num in range(len(P_X)):
-                    P.append([P_Y[y_el_num][0], P_X[X_el_num][0], (P_Y[y_el_num][2] * P_X[X_el_num][2])/P_Y[y_el_num][1]]) #1 el - y(wartość 1 - 3), 2 el - X(wartość 1 - 3 po dyskretyzacji), 3 - prawdopodobienstwo warunkowe
+    #     for col_num in range(len(X[0])):
+    #         P_semifinal = []
+    #         for y_el_num in range(len(P_Y)):
+    #             P = []
+    #             P_X = []
                 
-                P_semifinal.append(P)
-            P_final.append(P_semifinal)
-        return np.array(P_final)
+    #             ##Liczymy prawdopodobienstwo wystąpienia estymowanej wartosci X dla kolumny w kazdym estymatorze y(są 3 - 1,2,3)
+    #             for idx, est in enumerate(y):
+    #                 if est == P_Y[y_el_num][0]:
+    #                     P_X.append(X[idx, col_num])
+    #             P_X = self.Single_Prob(P_X, LaPlace)
+                
+    #             ##Jeżeli nie ma wszystkich wartości w kolumnie dodajemy kolumne o prawdopodobienstwie 0.0 dla brakujacego elementu
+    #             ##nwm czy potrzebne
+
+    #             est_num = set(X[:,0])
+    #             for el in P_X:
+    #                 if el[0] in est_num:
+    #                     est_num.remove(el[0])
+    #             if len(list(est_num)) > 0:
+    #                 for el in list(est_num):
+    #                     P_X.append([int(el), 0, 0.0])
+
+    #             ##Liczymy prawdopodobieństwo warunkowe dla każdego elementu i dodajemy do listy P
+    #             ## Dzielenie przez P_Y to liczba występowania y czy jego prawdopodobienstwo??? ( jako liczba wystepowania nie dziala)
+    #             for X_el_num in range(len(P_X)):
+    #                 P.append([P_Y[y_el_num][0], P_X[X_el_num][0], (P_Y[y_el_num][2] * P_X[X_el_num][2])/P_Y[y_el_num][1]]) #1 el - y(wartość 1 - 3), 2 el - X(wartość 1 - 3 po dyskretyzacji), 3 - prawdopodobienstwo warunkowe
+                
+    #             P_semifinal.append(P)
+    #         P_final.append(P_semifinal)
+    #     return np.array(P_final)
