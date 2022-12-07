@@ -21,8 +21,9 @@ from pygame.locals import *
 sys.path.append(os.path.abspath('..'))
 import moosegesture
 
+import webbrowser
 import subprocess
-from ahk import AHK
+import pyautogui
 import pygetwindow as gw
 
 # setup constants
@@ -52,7 +53,7 @@ strokes = None
 while True: # main loop
     for event in pygame.event.get():
         # handle all pygame events
-        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+        if event.type == QUIT:
             pygame.quit()
             sys.exit()
 
@@ -80,17 +81,28 @@ while True: # main loop
             # draw the line if the mouse is dragging
             points.append( (event.pos[0], event.pos[1]) )
         
+        print(strokes)
+        # Chooses the gesture    
         if strokes == None or len(strokes) == 0:
             pass
         else:
-            if strokes[0] == 'U' and strokes[1] == 'DR' and strokes[2] == 'UR' and strokes[3] == 'D':
-                print(strokes)
-                ahk = AHK()
-                subprocess.call([r"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"])
-                win = ahk.find_window(title = b'OUTLOOK')
-                win.activate()
-                strokes = None
-                continue
+            if len(strokes) == 4:
+                if strokes[0] == 'U' and strokes[1] == 'DR' and strokes[2] == 'UR' and strokes[3] == 'D':
+                    subprocess.Popen([r"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"])
+                    strokes = []
+                    segments = []
+                    continue
+            if len(strokes) == 3:
+                if strokes[0] == 'D' and strokes[1] == 'R' and strokes[2] == "U":
+                    subprocess.Popen([r'C:\Program Files\Mozilla Firefox\Firefox.exe', '-new-tab', 'http://www.google.com/'])
+                    strokes = []
+                    segments = []
+                    continue
+                elif strokes[0] == "DL" and strokes[1] == "DR" and strokes[2] == "U":
+                    pyautogui.hotkey('shift', 'ctrl', 'esc')       
+                    strokes = []
+                    segments = []
+                    continue
 
     # Draw the window.
     windowSurface.fill(BACKGROUNDCOLOR)
