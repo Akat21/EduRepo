@@ -87,23 +87,37 @@ while True: # main loop
             pass
         else:
             if len(strokes) == 4:
+                ##open MS OUTLOOK
                 if strokes[0] == 'U' and strokes[1] == 'DR' and strokes[2] == 'UR' and strokes[3] == 'D':
                     subprocess.Popen([r"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"])
                     strokes = []
                     segments = []
                     continue
+                #open MS WORD
+                elif strokes[0] == "D" and strokes[1] == "UR" and strokes[2] == "DR" and strokes[3] == "U":
+                    subprocess.Popen([r"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"]) 
+                    strokes = []
+                    segments = []
+                    continue
             if len(strokes) == 3:
+                ##Open new tab in Mozilal
                 if strokes[0] == 'D' and strokes[1] == 'R' and strokes[2] == "U":
                     subprocess.Popen([r'C:\Program Files\Mozilla Firefox\Firefox.exe', '-new-tab', 'http://www.google.com/'])
                     strokes = []
                     segments = []
                     continue
+                ##Open Task Menager
                 elif strokes[0] == "DL" and strokes[1] == "DR" and strokes[2] == "U":
                     pyautogui.hotkey('shift', 'ctrl', 'esc')       
                     strokes = []
                     segments = []
                     continue
-
+                ##close window
+                elif strokes[0] == "DL" and strokes[1] == "R" and strokes[2] == "UL":
+                    pyautogui.hotkey('ctrl', 'w')
+                    strokes = []
+                    segments = []
+                    continue
     # Draw the window.
     windowSurface.fill(BACKGROUNDCOLOR)
 
