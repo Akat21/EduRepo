@@ -81,7 +81,6 @@ while True: # main loop
             # draw the line if the mouse is dragging
             points.append( (event.pos[0], event.pos[1]) )
         
-        print(strokes)
         # Chooses the gesture    
         if strokes == None or len(strokes) == 0:
             pass
