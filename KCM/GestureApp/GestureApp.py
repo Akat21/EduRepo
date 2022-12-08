@@ -21,7 +21,6 @@ from pygame.locals import *
 sys.path.append(os.path.abspath('..'))
 import moosegesture
 
-import webbrowser
 import subprocess
 import pyautogui
 import pygetwindow as gw
@@ -113,7 +112,7 @@ while True: # main loop
                     continue
                 ##close window
                 elif strokes[0] == "DL" and strokes[1] == "R" and strokes[2] == "UL":
-                    pyautogui.hotkey('ctrl', 'w')
+                    pyautogui.press('volumedown', 10)
                     strokes = []
                     segments = []
                     continue
