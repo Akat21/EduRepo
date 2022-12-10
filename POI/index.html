@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+</head>
+<body>
+    <h1 id="txt">Hello there</h1>
+    <form action = 'index.html'>
+        <label for="mytext">Put some text:</label><br>
+        <input type="text" id="mytext">
+        <button type="submit" onclick='changeText()'>Submit</button>
+    </form>
+    <script>
+        const new_text = document.getElementById('mytext');
+
+        function changeText(){
+            alert(new_text.value);
+        }
+
+    </script>
+</body>
+</html>
