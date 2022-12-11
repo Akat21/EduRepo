@@ -9,10 +9,10 @@ class NBC(BaseEstimator, ClassifierMixin):
         pass
 
     def fit(self, X, y, LaPlace = False):
-        self._mean =  self.mean(X[:,0], y)
+        self.y = y
+        self._mean =  self.mean(X[:,0], y) ##TODO dla wielu kolumn(atrybutow)
         self._std = self.std(X[:,0], y)
-        # self._density = self.density(X[:,0], y) ##TODO
-
+       #####MEAN oraz STD są obliczane w fitcie jako uczenie, następnie liczymy density dla każdego klasyfikatora(1-3) i wybieramy najwieksza wartość w predictie
 
     def accuracy_score(self, X_predict, y_test):
         res_list = X_predict == y_test
@@ -20,7 +20,13 @@ class NBC(BaseEstimator, ClassifierMixin):
 
     def predict(self, X_test):
         res = []
-        return X_test [:,0]   
+        _dens = self.density(X_test,self.y)
+        for attri in _dens:
+            vals = []
+            for el in attri:
+                vals.append(el[2])
+            res.append(vals.index(max(vals)) + 1)
+        return res
 
     def predict_proba(self, P_X):
         res = []
@@ -63,11 +69,14 @@ class NBC(BaseEstimator, ClassifierMixin):
                 P.append([el, dict(P_cnt)[el], dict(P_cnt)[el]/sum(P_cnt.values())]) 
         return P
 
-    def density(self,X, y): ##TODO
-        p = []
-        for idx, el in enumerate(X):
-            p.append([y[idx], (1/(self._std*np.sqrt(2*np.pi))) * np.exp(-((el-self._mean)**2)/(2*(self._std**2)))])
-        return p
+    def density(self, X, y): ##TODO
+        res = []
+        for el in X:
+            p = []
+            for classi in set(y):
+                p.append([classi, el, (1/(self._std[int(classi-1)][1] * np.sqrt(2*np.pi))) * np.exp(-((el-self._mean[int(classi-1)][1])**2)/(2*(self._std[int(classi-1)][1]**2)))])
+            res.append(p)
+        return res
         
 
     def std(self, X, y):

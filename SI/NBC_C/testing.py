@@ -25,8 +25,8 @@ for i in range(1):
     # with_laplace.append(nbc.accuracy_score(X_predict, y_test))
 
     nbc = NBC()
-    nbc.fit(X_train,y_train, LaPlace=True)
-    y_predict = nbc.predict(X_test)
+    nbc.fit(X_train, y_train, LaPlace=True)
+    y_predict = nbc.predict(X_test[:2,0])
     print(y_predict)
     # prediction_prob = nbc.predict_proba(X_test)
     # nbc.accuracy_score(y_predict, y_test)
