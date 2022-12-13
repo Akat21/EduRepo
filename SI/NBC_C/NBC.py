@@ -8,9 +8,9 @@ class NBC(BaseEstimator, ClassifierMixin):
     def __init__(self):
         pass
 
-    def fit(self, X, y, LaPlace = False):
+    def fit(self, X, y):
         self.y = y
-        self._mean =  self.mean(X, y)
+        self._mean = self.mean(X, y)
         self._std = self.std(X, y)
 
     def accuracy_score(self, X_predict, y_test):
@@ -24,7 +24,6 @@ class NBC(BaseEstimator, ClassifierMixin):
             vals = []
             for val in el:
                 vals.append(val)
-            print
             res.append(vals.index(max(vals)) + 1)
         return res
 

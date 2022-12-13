@@ -24,7 +24,7 @@ for i in range(100):
     sklearn_accs.append(accuracy_score(y_predict, y_test)*100)
 
     nbc = NBC()
-    nbc.fit(X_train, y_train, LaPlace=True)
+    nbc.fit(X_train, y_train)
     y_predict = nbc.predict(X_test)
     acc = nbc.accuracy_score(y_predict, y_test)
     accs.append(nbc.accuracy_score(y_predict, y_test))
