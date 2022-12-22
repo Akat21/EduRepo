@@ -7,20 +7,48 @@ const AIM_HEIGHT = 50;
 
 const coo = [RandomNumberGenerator(CANVAS_WIDTH - AIM_WIDTH),RandomNumberGenerator(CANVAS_HEIGHT - AIM_HEIGHT)];
 
-setInterval(SetXY, 1000);
+let rect_color = "#FF0000"; //red
+let change_pos = setInterval(SetXY, 1000);
+let points = 0;
+
+canvas.addEventListener("click", x => {
+    if ((x.layerX > coo[0]) && (x.layerX < coo[0] + 50) && (x.layerY > coo[1]) && (x.layerY < coo[1] + 50)){
+        //Change pos of Aim Rect if correct
+        rect_color = "green";
+        points += 1;
+        SetXY();
+        clearInterval(change_pos);
+        change_pos = setInterval(SetXY, 1000);
+    }
+    else{
+        //Change pos of Aim Rect if not correct
+        rect_color = "#FF0000";
+        points = 0;
+    }
+});
 
 function draw(){
+    //AIM RECT DRAW
+    ctx.fillStyle = rect_color;
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     ctx.fillRect(coo[0], coo[1], AIM_WIDTH, AIM_HEIGHT);
-    ctx.fillStyle = "#FF0000";
+
+    //POINTS DRAW
+    ctx.fillStyle = "black";
+    ctx.font = "30px Arial";
+    ctx.fillText(points, 10, 30);
+
+    //REFRESH FRAMES
     requestAnimationFrame(draw);
 }
 
 function RandomNumberGenerator(max){
+    //Generate Random Number beetwen 0 and max
     return Math.floor(Math.random() * max);
 }
 
 function SetXY(){
+    //Set Aim Rect to x - coo[0], y - coo[1]
     coo[0] = RandomNumberGenerator(CANVAS_WIDTH - AIM_WIDTH);
     coo[1] = RandomNumberGenerator(CANVAS_HEIGHT - AIM_HEIGHT);
 }
