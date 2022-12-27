@@ -1,4 +1,3 @@
-//LEARN TO IMPORT REACT
 function Header(){
     return (
     <header>
