@@ -1,7 +1,9 @@
+// import React from 'react';
+// import ReactDOM  from 'react-dom';
+
 //IMPORTS
 // const some_module = require('./some_module'); //imported functions etc
 // console.log(new some_module.SomeMathObject); //call a func
-
 
 //LISTENERS
 // const EventEmitter = require('events');
@@ -104,7 +106,7 @@
 //     }
 // });
 
-const fs = require('fs');
+// const fs = require('fs');
 // fs.mkdir('tutorial', (err)=>{
 //     if (err){
 //         console.log(err);
@@ -130,11 +132,49 @@ const fs = require('fs');
 //     }
 // });
 
-fs.readdir('tutorial', (err,files)=>{
-    if (err){
-        console.log(err);
-    }
-    else{
-        console.log(files);
-    }
-});
+// fs.readdir('tutorial', (err,files)=>{
+//     if (err){
+//         console.log(err);
+//     }
+//     else{
+//         console.log(files);
+//     }
+// });
+
+//STREAMS - for big files(just use it)
+// const fs = require('fs');
+// const zlib = require('zlib'); //transform stream
+// const gzip = zlib.createGzip(); //example tr to zip file
+// const readStream = fs.createReadStream('./tutorial/example.txt','utf-8');
+// const writeStream = fs.createWriteStream('example1.txt');
+// readStream.pipe(writeStream);
+
+//HTTP SERVER (ROUTES)
+// const http = require('http');
+// const server = http.createServer((req,res)=>{
+//     if(req.url === '/'){
+//         res.write("Hello world");
+//         res.end();
+//     }
+//     else{
+//         res.write("Using some other domain");
+//         res.end();
+//     }
+// });
+
+// server.listen('3000');
+
+
+//SEND SOMETHING TO SERVER
+// const http = require('http');
+// const fs = require('fs');
+// http.createServer((req, res)=>{
+//     const readStream = fs.createReadStream('./static/index.html');
+//     res.writeHead(200,{'Content-type': 'text/html'});
+//     readStream.pipe(res);
+// }).listen('3000');
+
+//Package.json NPM instll 'package' !!!!!!!!!!!!!!!!!!!!!!!!!
+const _ = require('lodash');
+let example = _.fill([1,2,3,4,5], "someshit", 1, 4);
+console.log(example);
