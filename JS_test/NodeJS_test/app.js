@@ -174,7 +174,38 @@
 //     readStream.pipe(res);
 // }).listen('3000');
 
-//Package.json npm init then NPM instll 'package' !!!!!!!!!!!!!!!!!!!!!!!!!
-const _ = require('lodash');
-let example = _.fill([1,2,3,4,5], "someshit", 1, 4);
-console.log(example);
+//Package.json npm init then NPM instll 'package' !!!!!!!!!!!!!!!!!!!!!!!!! 
+// const _ = require('lodash');
+// let example = _.fill([1,2,3,4,5], "someshit", 1, 4);
+// console.log(example);
+
+
+//EXPRESS FRAMEWORK
+const express = require('express');
+const app = express();
+const path = require('path');
+const bodyPareser = require('body-parser');
+
+app.use('/public', express.static(path.join(__dirname, 'static')));//hide our dir
+app.use(bodyPareser.urlencoded({extended: false}));
+
+app.get('/',(req, res)=>{
+    res.sendFile(path.join(__dirname, 'static', 'index.html')); //path.join -- something like cd in cmd
+});
+
+app.post('/', (req, res)=>{
+    console.log(req.body);
+    //database work there
+    res.send('successfully posted');
+});
+// app.get('/example', (req, res)=>{
+//     res.send('hitting example route');
+// });
+
+// app.get('/example/:name/:age',(req, res)=>{
+//     console.log(req.params);
+//     console.log(req.query); //?variable_name=something&...;
+//     res.send(req.params.name + " : " + req.params.age);
+// });
+
+app.listen(3000);
