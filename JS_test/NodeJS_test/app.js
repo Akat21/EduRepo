@@ -174,7 +174,7 @@
 //     readStream.pipe(res);
 // }).listen('3000');
 
-//Package.json NPM instll 'package' !!!!!!!!!!!!!!!!!!!!!!!!!
+//Package.json npm init then NPM instll 'package' !!!!!!!!!!!!!!!!!!!!!!!!!
 const _ = require('lodash');
 let example = _.fill([1,2,3,4,5], "someshit", 1, 4);
 console.log(example);
