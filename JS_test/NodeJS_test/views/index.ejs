@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyPage</title>
+</head>
+<body>
+    <div id="root">
+        <h1>Hello world : <%= data.userQuery %></h1>
+    </div>
+    <ul>
+        <% data.searchResults.forEach((result)=>{
+            %>  <li><%= result %></li>
+        <%}); %>
+    </ul>
+    <script>
+        // $(document).ready(()=>{ JSON convert
+        //     $('#form').submit((e)=>{
+        //         e.preventDefault();
+        //         $.ajax({
+        //             url : '/',
+        //             type : 'post',
+        //             contentType : 'application/json',
+        //             data : JSON.stringify($('#form').serializeArray()),
+        //             success : (response)=>{
+        //                 console.log("succesfully got response");
+        //                 console.log(response);
+        //             }
+        //         })
+        //     })
+        // });
+    </script>
+</body>
+</html>

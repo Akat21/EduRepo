@@ -184,20 +184,41 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const Joi = require('joi');
 const bodyPareser = require('body-parser');
 
 app.use('/public', express.static(path.join(__dirname, 'static')));//hide our dir
-app.use(bodyPareser.urlencoded({extended: false}));
+// app.use(bodyPareser.urlencoded({extended: false}));
+// app.use(bodyPareser.json());
+app.set('view engine', 'ejs');
 
-app.get('/',(req, res)=>{
-    res.sendFile(path.join(__dirname, 'static', 'index.html')); //path.join -- something like cd in cmd
+app.get('/:userQuery',(req, res)=>{
+    res.render('index', {data : {userQuery: req.params.userQuery, searchResults : ['book1', 'book2', 'book3']}});
 });
 
 app.post('/', (req, res)=>{
     console.log(req.body);
+    //VALIDATION TODO
+    // const schema = Joi.object().keys({
+    //     email : Joi.string().trim().email().required(),
+    //     password : Joi.string().min(5).max(10).required()
+    // });
+
+    // schema.validate(req.body, (err, result)=>{
+    //     if(err){
+    //         console.log(err);
+    //         res.send('error occured');
+    //     }
+    //     else{
+    //         console.log(result);
+    //         res.send('successfully posted data');
+    //     }
+    // });
+
     //database work there
-    res.send('successfully posted');
+    // res.json({succes : true});
 });
+
 // app.get('/example', (req, res)=>{
 //     res.send('hitting example route');
 // });
