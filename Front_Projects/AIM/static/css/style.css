@@ -9,5 +9,11 @@
 }
 
 .logbar{
+    display: flex;
     text-align: left;
+    justify-content: space-between;
+}
+
+.bhs{
+    text-align: end;
 }

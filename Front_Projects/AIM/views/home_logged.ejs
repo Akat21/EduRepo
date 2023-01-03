@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+
+    <link rel = "stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class='logbar'>
+        <p id="user"><%= user %></p>
+        <a href="/">Logout</a>
+    </div>
+    <canvas class="canvas1" id="canvas1"></canvas>
+    <form action="/logged" method="POST" id="highscore">
+        <p>Highscore: 0</p>
+        <input type="hidden" name="hs" id="hs">
+        <button type="submit">Submit</button>
+    </form>
+    <div id="bhs">
+        <h1>Best of all: </h1>
+        <h2><%= hs %></h2>
+    </div>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

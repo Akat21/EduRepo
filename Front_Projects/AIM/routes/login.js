@@ -3,9 +3,9 @@ const router = express.Router();
 
 const fs = require('fs');
 
+let data = [0];
 //middleware
 router.use((req, res, next)=>{
-    console.log("Time: ", Date.now());
     next();
 });
 
@@ -15,32 +15,20 @@ router.get('/', (req, res)=>{
 
 //login
 router.post('/', (req, res)=>{
-    console.log(req.body);
     if(fs.existsSync('./database/username.txt')){
         const data = fs.readFileSync('./database/username.txt','utf-8').split(",");
         if (data.includes(req.body.username) == false){
-            fs.appendFile('./database/username.txt', "," + req.body.username, 'utf-8', (err)=>{
-                if (err){
-                    console.log(err);
-                }
-                else{
-                    console.log("File appended successfully");
-                }
-            });
+            fs.appendFileSync('./database/username.txt', "," + req.body.username, 'utf-8');
         }
     }
     else{
-        fs.writeFile('./database/username.txt', req.body.username, 'utf-8', (err)=>{
-            if (err){
-                console.log(err);
-            }
-            else{
-                console.log("File created successfully");
-            }
-        });
-
+        fs.writeFileSync('./database/username.txt', req.body.username, 'utf-8');
     }
-    res.redirect('/');
+    if(fs.existsSync('./database/points.txt')){
+        data = fs.readFileSync('./database/points.txt', 'utf-8').split(',');
+        data = data.map(Number);
+    }
+    res.redirect('/logged/?user=' + req.body.username + '&hs=' + Math.max(...data));
 });
 
 module.exports = router;

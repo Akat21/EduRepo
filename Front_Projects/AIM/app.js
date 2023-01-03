@@ -6,6 +6,7 @@ const bodyparser = require('body-parser');
 
 const login = require('./routes/login');
 const home = require('./routes/home');
+const loggedin = require('./routes/loggedin');
 
 //paths
 app.use('/', express.static(path.join(__dirname, 'static')));
@@ -20,6 +21,7 @@ app.set('view engine', 'ejs');
 //router
 app.use('/', home);
 app.use('/login', login);
+app.use('/logged', loggedin)
 
 app.get('/dashboard', (req,res)=>{
     res.render('dashboard', {title:"Main Page"});

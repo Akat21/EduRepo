@@ -1,4 +1,5 @@
 const canvas = document.getElementById("canvas1");
+const printHighscore = document.getElementById("highscore");
 const ctx = canvas.getContext('2d');
 const CANVAS_WIDTH = canvas.width = 600;
 const CANVAS_HEIGHT = canvas.height = 600;
@@ -10,6 +11,7 @@ const coo = [RandomNumberGenerator(CANVAS_WIDTH - AIM_WIDTH),RandomNumberGenerat
 let rect_color = "#FF0000"; //red
 let change_pos = setInterval(SetXY, 1000);
 let points = 0;
+let highscore = 0;
 
 canvas.addEventListener("click", x => {
     if ((x.layerX > coo[0]) && (x.layerX < coo[0] + 50) && (x.layerY > coo[1]) && (x.layerY < coo[1] + 50)){
@@ -23,6 +25,13 @@ canvas.addEventListener("click", x => {
     else{
         //Change pos of Aim Rect if not correct
         rect_color = "#FF0000";
+        if (points > highscore){
+            highscore = points;
+            points = 0;
+            console.log(printHighscore.childNodes[3].value);
+            printHighscore.childNodes[1].innerText = ("Highscore: " + highscore);
+            printHighscore.childNodes[3].value = highscore;
+        }
         points = 0;
     }
 });
