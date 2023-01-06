@@ -1,0 +1,51 @@
+/* .nav{                            HOME project
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav-items{
+    list-style: none;
+    display: flex;
+}
+.nav-items > li{
+    padding: 10px;
+} */
+
+
+body{
+    margin: 0;
+    font-family: Inter, sans-serif;
+}
+
+/* NAVBAR */
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #21222A;
+    padding: 30px 25px;
+    height: 30px;
+}
+ 
+.logo{
+    display: flex;
+    align-items: center;
+}
+
+.logo > img{
+    height: 30px;
+}
+
+.logo > h3{
+    margin-left: 7px;
+    color: #61DAFB;
+    font-weight: 700;
+    font-size: 22px;
+}
+
+.navbar > h4{
+    color: #DEEBF8;
+    font-weight: 600;
+}
+
+/* MAIN */
