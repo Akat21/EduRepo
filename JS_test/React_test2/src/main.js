@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Main from './First_project/Main';
-import Navbar from './First_project/Navbar';
+import Navbar from './CloneAirBNB/Navbar';
+import Hero from './CloneAirBNB/Hero';
 
 function Page(){
     return(
         <div>
-            <Navbar />      
-            <Main />
+            <Navbar />
+            <Hero />      
         </div>
     );
 };
