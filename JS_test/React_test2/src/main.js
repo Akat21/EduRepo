@@ -8,7 +8,14 @@ function Page(){
     return(
         <div>
             <Navbar />
-            <Card />
+            <Card 
+                img="some_dud.jpg"
+                rating="5.0"
+                reviewCount={6}
+                country="USA"
+                title="Life lessons with Katie Zafares"
+                price={136}
+            />
         </div>
     );
 };
