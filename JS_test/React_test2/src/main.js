@@ -3,19 +3,27 @@ import ReactDOM from 'react-dom';
 import Navbar from './CloneAirBNB/Navbar';
 import Hero from './CloneAirBNB/Hero';
 import Card from './CloneAirBNB/Card';
+import data from './data';
 
 function Page(){
+    const dataSet = data.map(data =>{
+        return <Card 
+            key={data.id}
+            img={data.img}
+            rating={data.rating}
+            reviewCount={data.reviewCount}
+            country={data.country}
+            title={data.title}
+            price={data.price}
+            openSpots={data.openSpots}
+        /> 
+    });
     return(
         <div>
             <Navbar />
-            <Card 
-                img="some_dud.jpg"
-                rating="5.0"
-                reviewCount={6}
-                country="USA"
-                title="Life lessons with Katie Zafares"
-                price={136}
-            />
+            <section className='cards-list'>
+                {dataSet}
+            </section>
         </div>
     );
 };
