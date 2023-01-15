@@ -17,7 +17,5 @@ for idx, el in enumerate(y_iris):
 X_train, X_test, y_train, y_test = train_test_split(X_iris, y_iris_coded, random_state = 13)
 
 mlp = MLP()
-out_h, out_o = mlp._forward(X_train)
-J = mlp._compute_cost(y_train, out_o)
 res = mlp.fit(X_train, y_train)
-print(J)
+# print(J)

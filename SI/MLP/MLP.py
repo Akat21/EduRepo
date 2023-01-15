@@ -12,10 +12,9 @@ class MLP(object):
 
     def _forward(self, X):
         classes = 3
-        X = np.column_stack((X.index, np.array(X)))
-        self.w_h = np.array(len(X[0]) * [np.zeros(len(X[0]) + 1)])
-        self.w_o = np.array((len(X[0]) + 1) * [np.zeros(classes)])
-        self.b_h = np.array(np.ones(len(X[0]) + 1))
+        self.w_h = np.array(len(X) * [np.zeros(len(X) + 1) + 0.01])
+        self.w_o = np.array((len(X) + 1) * [np.zeros(classes) + 0.01])
+        self.b_h = np.array(np.ones(len(X) + 1))
         self.b_o = np.array(np.ones(classes))
         out_h = self._sigmoid(np.dot(X, self.w_h) + self.b_h)
         out_o = self._sigmoid(np.dot(out_h, self.w_o) + self.b_o)
@@ -30,7 +29,24 @@ class MLP(object):
 
     def fit(self, X_train, y_train):
         X_train = np.column_stack((X_train.index, np.array(X_train)))
-        w_h = np.array(len(X_train[0]) * [np.zeros(len(X_train[0]) + 1)])
-        w_o = np.array((len(X_train[0]) + 1) * [np.zeros(len(y_train[0][1]))])
+        y_train = np.column_stack(((np.array(y_train)[:,0] - 1), np.array(y_train)[:,1]))
+        w_h = np.array(len(X_train[0]) * [np.zeros(len(X_train[0]) + 1) + 0.01])
+        w_o = np.array((len(X_train[0]) + 1) * [np.zeros(len(y_train[0][1])) + 0.01])
         b_h = np.zeros(len(X_train[0] + 1))
         b_o = np.zeros(len(y_train[0][1]))
+        
+        #SHUFFLE 
+        if self.shuffle == True:
+            idxs = np.arange(X_train.shape[0])
+            np.random.shuffle(idxs)
+            X_train = X_train[idxs]
+            y_train = y_train[idxs]
+        
+        ran_idx = np.random.randint(len(X_train), size = len(X_train))
+        for idx in ran_idx:
+            a_h, a_o = self._forward(X_train[idx])
+            f_o = (a_o * (1 - a_o))
+            delta_o = (a_o - y_train[idx,1]) * f_o
+            f_h = (a_h * (1 - a_h))
+            delta_h = np.dot(delta_o, np.transpose(w_o)) * f_h
+            print(delta_h)
