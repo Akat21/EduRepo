@@ -49,10 +49,7 @@ class MLP(object):
             delta_o = (a_o - y_train[idx,1]) * f_o
             f_h = (a_h * (1 - a_h))
             delta_h = np.dot(delta_o, np.transpose(w_o)) * f_h
-            _X_train = np.insert(X_train[idx], 0, 1)
-            grad_w_h = np.dot(np.transpose(_X_train), delta_h)
-            grad_b_h = delta_h
-            grad_w_o = np.dot(np.transpose(a_h), delta_o)
-            print(grad_w_o)
-            break
-            ##GRADINET TODO
+            # grad_w_h = np.dot(np.transpose(X_train[idx]), delta_h) <-- tu sie wypierdala (shapey macierzy sie nie zgadzaja ze soba)
+            # grad_b_h = delta_h
+            # print(grad_w_o)
+            # break
