@@ -1,7 +1,7 @@
 import numpy as np
 
-pop = 5
-n = 6
+pop = 10
+n = 4
 
 def GenerateP_0(pop, n):
     '''Generuje P_0'''
@@ -11,10 +11,14 @@ def GenerateP_0(pop, n):
     return np.array(P_0)
 
 def evaluate(P):
-    # res = []
-    # for el in P:
-    #     res.append(beats_counter(el))
-    return beats_counter(P)
+    '''Zwraca liczbę bić'''
+    res = []
+    if len(np.shape(P)) == 2:
+        for el in P:
+            res.append(beats_counter(el))
+        return res
+    elif len(np.shape(P)) == 1:
+        return beats_counter(P)
 
 def beats_counter(pos):
     '''Liczy bicia'''
@@ -27,7 +31,7 @@ def beats_counter(pos):
             if(col == (len(pos[iter:]) - 1)):
                 break
             else:
-                if Attack(row, col + 1, pos[col + 1], col + 2) == True:
+                if Attack(row, col + 1, pos[col + iter + 1], col + 2) == True:
                     cnt += 1
     return cnt
 
@@ -56,7 +60,6 @@ def selection(P):
                 else:
                     P_n.append(P[i_2])
                 i += 1
-    # return np.unique(P_n, axis=0)           ##Zwraca unikalne wartości ale trzeba pozniej changeować pop -> dziwne, teraz są powtórki ?
     return np.array(P_n)
 
 def crossover(P):
@@ -79,10 +82,26 @@ def mutation(P):
         i += 1
     return P
 
-P_0 = GenerateP_0(pop, n)
-P_n = selection(P_0)
-P_n = crossover(P_n)
-print(P_n)
-print(mutation(P_n))
-# best = np.where(evaluate(P_0) == np.amin(evaluate(P_0)))[0][0]      ###indeks najlepszego rozwiązania
-# print(best)
+def main():
+    P_0 = GenerateP_0(pop, n)
+    P = P_0
+    gen = 0
+    gen_max = 1000
+    ff_max = 0
+    best = np.where(evaluate(P_0) == np.amin(evaluate(P_0)))[0][0]
+    while ((gen < gen_max) and (evaluate(P[best]) > ff_max)):
+        P_n = selection(P)
+
+        P_n = crossover(P_n)
+
+        P_n = mutation(P_n)
+
+        evaluate(P_n)
+        best = np.where(evaluate(P_n) == np.amin(evaluate(P_n)))[0][0]
+        P = P_n
+        gen += 1
+    
+    print(P[best], evaluate(P[best]))
+
+
+main()
