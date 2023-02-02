@@ -1,7 +1,8 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 pop = 10
-n = 4
+n = 5
 
 def GenerateP_0(pop, n):
     '''Generuje P_0'''
@@ -83,12 +84,15 @@ def mutation(P):
     return P
 
 def main():
+    ff = []
     P_0 = GenerateP_0(pop, n)
     P = P_0
     gen = 0
+    gens = []
     gen_max = 1000
     ff_max = 0
     best = np.where(evaluate(P_0) == np.amin(evaluate(P_0)))[0][0]
+    print(best)
     while ((gen < gen_max) and (evaluate(P[best]) > ff_max)):
         P_n = selection(P)
 
@@ -96,12 +100,21 @@ def main():
 
         P_n = mutation(P_n)
 
-        evaluate(P_n)
+        #Y w wykresie - funkcja przystosowania
+        ff.append(np.mean(evaluate(P_n)))
+
         best = np.where(evaluate(P_n) == np.amin(evaluate(P_n)))[0][0]
         P = P_n
         gen += 1
+        #X w wykresie(numer generacji)
+        gens.append(gen)
     
     print(P[best], evaluate(P[best]))
+    return ff, gens
 
 
-main()
+ff_mean, gen = main()
+
+plt.plot(gen, ff_mean)
+plt.savefig("plot.png", format = "png")
+plt.show()
