@@ -10,6 +10,7 @@ print(img1.dtype)
 print(img1.shape)
 print(np.min(img1), np.max(img1))
 
+##ZAD1
 def imgToUint8(img):
     if np.issubdtype(img.dtype, np.uint8):
         return img
@@ -21,7 +22,9 @@ def imgToFloat(img):
         return img
     else:
         return img/255.0
-   
+#######
+
+##ZAD2
 def convertToGrayY2(img):        
     R = img[:,:,0] * 0.2126
     G = img[:,:,1] * 0.7152
@@ -88,3 +91,8 @@ for i in range(3):
 plt.subplot(3,3,9)
 plt.imshow(img_B0, cmap=plt.cm.gray)
 plt.show()
+######
+
+##ZAD3
+
+######
