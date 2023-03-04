@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
-img1 = plt.imread("Cool-Rainbow-Colors-drawing.jpg")
-img2 = cv2.imread("Cool-Rainbow-Colors-drawing.jpg")
+img1 = plt.imread("B01.jpg")
+img2 = cv2.imread("B01.jpg")
 img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
 
 print(img1.dtype)
@@ -94,5 +94,9 @@ plt.show()
 ######
 
 ##ZAD3
-
+parametr = "Normal"
+img = plt.imread('B02.jpg')
+fragment = img[500:700, 600:800].copy()
+plt.imshow(fragment)
+plt.savefig("Tęcza-{}".format(parametr))
 ######
