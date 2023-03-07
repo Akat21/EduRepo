@@ -20,12 +20,16 @@ def Zadanie1():
         sf.write('sound_R.wav', data[:,1], fs)
         sf.write('sound_mix.wav', data[:,0]/2 + data[:,1]/2, fs)
 
-        ###WYRYSYOWNE 2 KANAŁY DZWIEKOWE
-        plt.subplot(2,1,1)
+        ###WYRYSYOWNE 3 KANAŁY DZWIEKOWE
+        plt.subplot(3,1,1)
         plt.plot(np.arange(0,data.shape[0])/fs, data[:,0])
 
-        plt.subplot(2,1,2)
+        plt.subplot(3,1,2)
         plt.plot(np.arange(0,data.shape[0])/fs, data[:,1])
+        
+        plt.subplot(3,1,3)
+        plt.plot(np.arange(0,data.shape[0])/fs, data[:,0]/2 + data[:,1]/2)
+        
         plt.show()
 
     #####WIDMO
@@ -80,4 +84,5 @@ def plotAudio(Signal, fs, TimeMargin=[0,0.15]):
     plt.plot(np.arange(0,fs/2,fs/fsize), 20*np.log10(np.abs(yf[:fsize//2])))
     plt.show()
 
+# Zadanie1()
 plotAudio(data, fs)
