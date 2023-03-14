@@ -26,6 +26,7 @@ plt.plot(d, PrPtdb2)
 plt.title('1-100m')
 plt.xlabel('s(m)')
 plt.ylabel('I(dB)')
+plt.legend(['900MHz', '2400MHz'])
 plt.show()
 
 #b
@@ -41,6 +42,7 @@ plt.plot(d, PrPtdb2)
 plt.title('1-10km')
 plt.xlabel('s(m)')
 plt.ylabel('I(dB)')
+plt.legend(['900MHz', '2400MHz'])
 plt.show()
 
 #Zad2
@@ -52,7 +54,7 @@ plt.ylabel('t(s)')
 plt.show()
 
 
-#Zad3
+#Zad3 TODO
 Gt, Gr = 1.6, 1.6
 f1 = 900000000
 f2 = 2400000000
