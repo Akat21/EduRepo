@@ -11,7 +11,6 @@ d = 1
 lambdaa = 0.3
 prpt = Gt * Gr * (lambdaa/(4*np.pi*d)) ** 2
 prptdb = 10*np.log10(prpt)
-print(prptdb)
 
 #a
 d = np.linspace(1, 100, 500)
@@ -64,20 +63,45 @@ h2 = 3
 #a
 d = np.linspace(1,100, 500)
 d1 = np.sqrt((h1 - h2)**2 + d**2)
-d2 = np.sqrt((h1+h2)**2 + d**2)
+d2 = np.sqrt((h1 + h2)**2 + d**2)
 
 phi1 = -2*np.pi*f1*(d1/c)
 phi2 = -2*np.pi*f1*(d2/c)
-PrPt1 = Gt * Gr * (((c/f1)/(4*np.pi))**2) * np.abs((1/d1)*np.exp(phi1) - (1/d2)*np.exp(phi2))**2
+PrPt1 = (Gt * Gr * ((c/f1) / (4 * np.pi)))**2 * np.abs((1/d1) * np.exp(1j * phi1) - (1/d2) * np.exp(1j * phi2))**2
 PrPtdb1 = 10*np.log10(PrPt1)
 
 phi1 = -2*np.pi*f2*(d1/c)
 phi2 = -2*np.pi*f2*(d2/c)
-PrPt2 = Gt * Gr * (((c/f2)/(4*np.pi))**2) * np.abs((1/d1)*np.exp(phi1) - (1/d2)*np.exp(phi2))**2
+PrPt2 = (Gt * Gr * ((c/f2) / (4 * np.pi)))**2 * np.abs((1/d1) * np.exp(1j * phi1) - (1/d2) * np.exp(1j * phi2))**2
+PrPtdb2 = 10*np.log10(PrPt2)
+
+plt.plot(d, PrPtdb1)
+plt.plot(d, PrPtdb2)
+plt.title('1-100m')
+plt.xlabel('s(m)')
+plt.ylabel('I(dB)')
+plt.legend(['900MHz', '2400MHz'])
+plt.show()
+
+#b
+d = np.linspace(1,10000, 500)
+d1 = np.sqrt((h1 - h2)**2 + d**2)
+d2 = np.sqrt((h1 + h2)**2 + d**2)
+
+phi1 = -2*np.pi*f1*(d1/c)
+phi2 = -2*np.pi*f1*(d2/c)
+PrPt1 = (Gt * Gr * ((c/f1) / (4 * np.pi)))**2 * np.abs((1/d1) * np.exp(1j * phi1) - (1/d2) * np.exp(1j * phi2))**2
+PrPtdb1 = 10*np.log10(PrPt1)
+
+phi1 = -2*np.pi*f2*(d1/c)
+phi2 = -2*np.pi*f2*(d2/c)
+PrPt2 = (Gt * Gr * ((c/f2) / (4 * np.pi)))**2 * np.abs((1/d1) * np.exp(1j * phi1) - (1/d2) * np.exp(1j * phi2))**2
+PrPtdb2 = 10*np.log10(PrPt2)
 
 plt.plot(d, PrPtdb1)
 plt.plot(d, PrPtdb2)
 plt.title('1-10km')
 plt.xlabel('s(m)')
 plt.ylabel('I(dB)')
+plt.legend(['900MHz', '2400MHz'])
 plt.show()
