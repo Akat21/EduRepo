@@ -7,6 +7,7 @@ scale = 1.5
 plt.imshow(img)
 plt.title('Orginalny obraz')
 plt.savefig('./lab3/B01_original.jpg', format = 'jpg')
+plt.show()
 
 #Nearest Neighbors
 def NN():
@@ -70,4 +71,24 @@ def interpol():
         plt.title('Obraz powiększony o ' + str((scale - 1) * 100) + '%' + ' Bilinear Interpolation')
         plt.show()
 
-interpol()
+scale = 0.5
+
+#Mean Downscale
+def DownScale_mean():
+    height, width, dim = img.shape
+    new_width, new_height = int(width * scale), int(height * scale)
+
+    scaled_img = np.zeros((new_height, new_width, dim), dtype=np.uint8)
+
+    for i in range(height):
+        for j in range(width):
+
+            neighborhood = img[max(0, i - 2):min(height, i + 3), max(0, j - 2):min(width, j + 3)]
+
+            pixel_value = np.mean(neighborhood, axis=(0, 1))
+            scaled_img[int(i * scale), int(j * scale)] = np.round(pixel_value).astype(np.uint8)
+            
+    plt.imshow(scaled_img)
+    plt.show()
+
+DownScale_mean()
