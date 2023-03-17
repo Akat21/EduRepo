@@ -12,7 +12,7 @@ export default{
         {
             "id": 121320,
             "name": "Princess",
-            "url": "./src/assets/princess.jpg",
+            "url": "./src/assets/buttonMeme.jpg",
             "width": 1200,
             "height": 1200,
             "box_count": 2
