@@ -12,7 +12,7 @@ plt.show()
 #Nearest Neighbors
 def NN():
     if(len(img.shape) < 3):
-        pass
+        return 0
     else:
         height, width, dim = img.shape
         new_width, new_height = int(width * scale), int(height * scale)
@@ -25,14 +25,12 @@ def NN():
                 y = int(min(i / scale, height - 1))
                 scaled_img[i, j] = img[y, x]
 
-        plt.imshow(scaled_img)
-        plt.title('Obraz powiększony o ' + str((scale - 1) * 100) + '%' + ' Nearest Neighbors')
-        plt.savefig('./lab3/B01_scaled.jpg', format = 'jpg')
+        return scaled_img
 
 #Interpolation
 def interpol():
     if(len(img.shape) < 3):
-        pass
+        return 0
     else:
         height, width, dim = img.shape
         new_width, new_height = int(width * scale), int(height * scale)
@@ -67,62 +65,70 @@ def interpol():
 
                 scaled_img[i, j] = np.round(pixel_value).astype(np.uint8)
         
-        plt.imshow(scaled_img)
-        plt.title('Obraz powiększony o ' + str((scale - 1) * 100) + '%' + ' Bilinear Interpolation')
-        plt.show()
+        return scaled_img
 
 scale = 0.5
 
 #Mean Downscale
 def DownScale_mean():
-    height, width, dim = img.shape
-    new_width, new_height = int(width * scale), int(height * scale)
+    if(len(img.shape) < 3):
+        return 0
+    else:
+        height, width, dim = img.shape
+        new_width, new_height = int(width * scale), int(height * scale)
 
-    scaled_img = np.zeros((new_height, new_width, dim), dtype=np.uint8)
+        scaled_img = np.zeros((new_height, new_width, dim), dtype=np.uint8)
 
-    for i in range(height):
-        for j in range(width):
+        for i in range(height):
+            for j in range(width):
 
-            neighborhood = img[max(0, i - 2):min(height, i + 3), max(0, j - 2):min(width, j + 3)]
+                neighborhood = img[max(0, i - 2):min(height, i + 3), max(0, j - 2):min(width, j + 3)]
 
-            pixel_value = np.mean(neighborhood, axis=(0, 1))
-            scaled_img[int(i * scale), int(j * scale)] = np.round(pixel_value).astype(np.uint8)
-            
-    plt.imshow(scaled_img)
-    plt.show()
+                pixel_value = np.mean(neighborhood, axis=(0, 1))
+                scaled_img[int(i * scale), int(j * scale)] = np.round(pixel_value).astype(np.uint8)
+
+        return scaled_img        
 
 def DownScale_mediana():
-    height, width, dim = img.shape
-    new_width, new_height = int(width * scale), int(height * scale)
+    if(len(img.shape) < 3):
+        return 0
+    else:
+        height, width, dim = img.shape
+        new_width, new_height = int(width * scale), int(height * scale)
 
-    scaled_img = np.zeros((new_height, new_width, dim), dtype=np.uint8)
+        scaled_img = np.zeros((new_height, new_width, dim), dtype=np.uint8)
 
-    for i in range(height):
-        for j in range(width):
+        for i in range(height):
+            for j in range(width):
 
-            neighborhood = img[max(0, i - 2):min(height, i + 3), max(0, j - 2):min(width, j + 3)]
+                neighborhood = img[max(0, i - 2):min(height, i + 3), max(0, j - 2):min(width, j + 3)]
 
-            pixel_value = np.median(neighborhood, axis=(0, 1))
-            scaled_img[int(i * scale), int(j * scale)] = np.round(pixel_value).astype(np.uint8)
-            
-    plt.imshow(scaled_img)
-    plt.show()
+                pixel_value = np.median(neighborhood, axis=(0, 1))
+                scaled_img[int(i * scale), int(j * scale)] = np.round(pixel_value).astype(np.uint8)
+                
+        return scaled_img
 
 def DownScale_wage_mean():
-    height, width, dim = img.shape
-    new_width, new_height = int(width * scale), int(height * scale)
+    if(len(img.shape) < 3):
+        return 0
+    else:
+        height, width, dim = img.shape
+        new_width, new_height = int(width * scale), int(height * scale)
 
-    scaled_img = np.zeros((new_height, new_width, dim), dtype=np.uint8)
+        scaled_img = np.zeros((new_height, new_width, dim), dtype=np.uint8)
 
-    for i in range(height):
-        for j in range(width):
+        for i in range(height):
+            for j in range(width):
 
-            neighborhood = img[max(0, i - 2):min(height, i + 3), max(0, j - 2):min(width, j + 3)]
+                neighborhood = img[max(0, i - 2):min(height, i + 3), max(0, j - 2):min(width, j + 3)]
 
-            pixel_value = np.average(neighborhood, axis=(0, 1))
-            scaled_img[int(i * scale), int(j * scale)] = np.round(pixel_value).astype(np.uint8)
-            
-    plt.imshow(scaled_img)
-    plt.show()
+                pixel_value = np.average(neighborhood, axis=(0, 1))
+                scaled_img[int(i * scale), int(j * scale)] = np.round(pixel_value).astype(np.uint8)
+                
+        return scaled_img
 
-DownScale_wage_mean()
+img = DownScale_wage_mean()
+plt.imshow(img)
+plt.xlim([150, 250])
+plt.ylim([150, 230])
+plt.show()
