@@ -1,12 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-img = plt.imread("./lab3/B01.jpg")
+img = plt.imread("./lab3/low_q.jpg")
 scale = 1.5
-
+print(img.shape)
 plt.imshow(img)
 plt.title('Orginalny obraz')
-plt.savefig('./lab3/B01_original.jpg', format = 'jpg')
+plt.show()
+
+plt.imshow(img)
+plt.title('Wycinek Oryginalny')
+plt.xlim([400, 550])
+plt.ylim([250, 100])
 plt.show()
 
 #Nearest Neighbors
@@ -67,7 +72,7 @@ def interpol():
         
         return scaled_img
 
-scale = 0.5
+# scale = 0.7
 
 #Mean Downscale
 def DownScale_mean():
@@ -85,7 +90,7 @@ def DownScale_mean():
                 neighborhood = img[max(0, i - 2):min(height, i + 3), max(0, j - 2):min(width, j + 3)]
 
                 pixel_value = np.mean(neighborhood, axis=(0, 1))
-                scaled_img[int(i * scale), int(j * scale)] = np.round(pixel_value).astype(np.uint8)
+                scaled_img[int(i * scale) - 1, int(j * scale) - 1] = np.round(pixel_value).astype(np.uint8)
 
         return scaled_img        
 
@@ -104,7 +109,7 @@ def DownScale_mediana():
                 neighborhood = img[max(0, i - 2):min(height, i + 3), max(0, j - 2):min(width, j + 3)]
 
                 pixel_value = np.median(neighborhood, axis=(0, 1))
-                scaled_img[int(i * scale), int(j * scale)] = np.round(pixel_value).astype(np.uint8)
+                scaled_img[int(i * scale) - 1, int(j * scale) - 1] = np.round(pixel_value).astype(np.uint8)
                 
         return scaled_img
 
@@ -116,19 +121,20 @@ def DownScale_wage_mean():
         new_width, new_height = int(width * scale), int(height * scale)
 
         scaled_img = np.zeros((new_height, new_width, dim), dtype=np.uint8)
-
+        print(new_height, new_width)
         for i in range(height):
             for j in range(width):
 
                 neighborhood = img[max(0, i - 2):min(height, i + 3), max(0, j - 2):min(width, j + 3)]
 
                 pixel_value = np.average(neighborhood, axis=(0, 1))
-                scaled_img[int(i * scale), int(j * scale)] = np.round(pixel_value).astype(np.uint8)
-                
+                scaled_img[int(i * scale) - 1, int(j * scale) - 1] = np.round(pixel_value).astype(np.uint8)
+
         return scaled_img
 
-img = DownScale_wage_mean()
+img = interpol()
 plt.imshow(img)
-plt.xlim([150, 250])
-plt.ylim([150, 230])
+plt.title("Wycinek Przeskalowany")
+plt.xlim([600, 820])
+plt.ylim([390, 170])
 plt.show()
