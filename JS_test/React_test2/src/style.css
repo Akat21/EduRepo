@@ -242,3 +242,22 @@ main{
     margin-top: 20px;
     width: 30%;
 }
+
+.meme--text--top{
+    display: block;
+    font-size: 50px;
+    margin-top: -580px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.meme--text--bottom{
+    display: block;
+    font-size: 50px;
+    margin-top: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+
+}

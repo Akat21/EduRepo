@@ -4,7 +4,7 @@ import memesData from "../memesData.js";
 export default function Meme(){
     const [meme, setMeme] = React.useState({
         topText: "",
-        BottomText: "",
+        bottomText: "",
         randomImg: "./src/assets/drake.jpg"
     });
 
@@ -20,14 +20,40 @@ export default function Meme(){
         }));
     }
 
+    function handleChange(event){
+        const {name, value} = event.target
+        setMeme(prevMeme =>({
+            ...prevMeme,
+            [name]: value
+        }))
+    }
+
     return(
         <main>
             <div className="form">
-                <input className="form--input" type="text" placeholder="Top text"></input>
-                <input className="form--input" type="text" placeholder="Bottom text"></input>
+                <input 
+                    className="form--input" 
+                    type="text" 
+                    placeholder="Top text" 
+                    name="topText" 
+                    value={meme.topText}
+                    onChange={handleChange}
+                />
+                <input 
+                    className="form--input" 
+                    type="text" 
+                    placeholder="Bottom text" 
+                    name="bottomText" 
+                    value={meme.bottomText}
+                    onChange={handleChange}
+                />
                 <button className="form--button" onClick={getMemeImg}>Get a new meme image</button>
             </div>
-            <img src={meme.randomImg} className="meme--img"/>
+            <div>
+                <img src={meme.randomImg} className="meme--img"/>
+                <h2 className="meme--text--top">{meme.topText}</h2>
+                <h2 className="meme--text--bottom">{meme.bottomText}</h2>
+            </div>
         </main>
     )
 }
