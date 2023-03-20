@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
-img1 = plt.imread("B01.jpg")
-img2 = cv2.imread("B01.jpg")
+img1 = plt.imread("./lab1/B01.jpg")
+img2 = cv2.imread("./lab1/B01.jpg")
 img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
 
 print(img1.dtype)

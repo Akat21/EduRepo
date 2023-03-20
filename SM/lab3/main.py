@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import cv2
 
-img = plt.imread("./lab3/low_q.jpg")
+img = plt.imread("./lab3/high_q.jpg")
 scale = 1.5
 print(img.shape)
 plt.imshow(img)
@@ -12,6 +13,13 @@ plt.imshow(img)
 plt.title('Wycinek Oryginalny')
 plt.xlim([400, 550])
 plt.ylim([250, 100])
+plt.show()
+
+edge = cv2.Canny(img, 50, 150)
+plt.title("Wycinek Oryginalny Krawedzie")
+plt.xlim([400, 550])
+plt.ylim([250, 100])
+plt.imshow(edge)
 plt.show()
 
 #Nearest Neighbors
@@ -72,7 +80,7 @@ def interpol():
         
         return scaled_img
 
-# scale = 0.7
+scale = 0.7
 
 #Mean Downscale
 def DownScale_mean():
@@ -132,9 +140,15 @@ def DownScale_wage_mean():
 
         return scaled_img
 
-img = interpol()
+img = DownScale_wage_mean()
+edge = cv2.Canny(img, 50, 150)
+plt.title("Wycinek Przeskalowany Krawedzie")
+plt.xlim(np.array([400, 550]) * 0.7)
+plt.ylim(np.array([250, 100]) * 0.7)
+plt.imshow(edge)
+plt.show()
 plt.imshow(img)
 plt.title("Wycinek Przeskalowany")
-plt.xlim([600, 820])
-plt.ylim([390, 170])
+plt.xlim(np.array([400, 550]) * 0.7)
+plt.ylim(np.array([250, 100]) * 0.7)
 plt.show()
