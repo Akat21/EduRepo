@@ -2,7 +2,8 @@
     require_once __DIR__.'/vendor/autoload.php';
 
     use \Doctrine\DBAL\DriverManager;
-    
+    use \Doctrine\DBAL\Schema\Schema;
+
     $connection_params = array(
         'dbname' => 'zi2',
         'user' => 'root',
@@ -37,4 +38,25 @@
     foreach($results as $row){
         echo $row['customerNumber'] . ' ' . $row['customerName'] . ' ' . $row['firstName'] . ' ' . $row['lastName'] . PHP_EOL;
     }
+
+    $mytable = 'my_table';
+    $schema = new Schema();
+    $tab =$schema->createTable($mytable);
+    $tab->addColumn('id', 'integer', ['unsigned'=>true, 'autoincrement'=>true]);
+    $tab->addColumn('napis', 'string');
+    $tab->addColumn('liczba', 'integer');
+    $tab->setPrimaryKey(['id']);
+
+    $sql = $schema->toSql($conn->getDatabasePlatform());
+
+    $conn->executeStatement($sql[0]);
+
+    $queryBuilder->insert('my_table')
+        ->values([
+            'liczba' => '?',
+            'napis' => '?'
+        ])
+        ->setParameters([13, 'XD']);
+
+    $queryBuilder->executeStatement();
 ?>
