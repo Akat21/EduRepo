@@ -56,71 +56,86 @@ def colorFit(pixel, pallet):
         return pallet[np.argmin(pts)]
 
 def kwant_colorFit(img, pallet):
-    img = imgToFloat(img)
     if(len(img.shape) < 3):
-        out_img = img.copy()
         height, width = img.shape
-
-        for i in range(height):
-            for j in range(width):
-                out_img[i, j] = colorFit(img[i, j], pallet)
     else:
-        out_img = img.copy()
         height, width, dim = img.shape
 
-        for i in range(height):
-            for j in range(width):
-                out_img[i, j] = colorFit(img[i, j], pallet)
+
+    img = imgToFloat(img)
+    out_img = img.copy()
+
+    for i in range(height):
+        for j in range(width):
+            out_img[i, j] = colorFit(img[i, j], pallet)
     return out_img
 
 ###
-def dithering(img):
+def dithering_r(img):
     img = imgToFloat(img)
-    if(len(img.shape) < 3):
-        height, width = img.shape
-        r = np.random.rand(height, width)
-        binary_img = (img >= r) * 1
-        return binary_img
-    else:
-        gray_img = np.dot(img[...,:3], [0.2989, 0.5870, 0.1140])
         
-        height, width = gray_img.shape
-        r = np.random.rand(height, width)
-        binary_img = (gray_img >= r) * 1
+    height, width = img.shape
+    r = np.random.rand(height, width)
+    binary_img = (img >= r) * 1
 
-        rgb_img = np.zeros((*binary_img.shape, 3), dtype=np.uint8)
-        rgb_img[..., 0] = binary_img
-        rgb_img[..., 1] = binary_img
-        rgb_img[..., 2] = binary_img
-
-        return rgb_img * 255
+    return binary_img
     
 def dithering_o(img, pallet):
     if (len(img.shape) < 3):
-        pass
+        height, width = img.shape
     else:
-        out_img = img.copy()
-        out_img = imgToFloat(out_img)
-        
-        n = 2
-        M1 = np.array([[0, 2], [3, 1]])
-        M2 = np.array([[0,8,2,10],[12,4,14,6],[3,11,1,9],[15,7,13,5]])
-
-        Mpre = (M2 + 1) / (2*n)**2 - 0.5
-
         height, width, dim = img.shape
 
-        r = int(np.round(((pallet.max()*255 - pallet.min()*255) / (img.max() - img.min()))))
+    out_img = img.copy()
+    out_img = imgToFloat(out_img)
+    
+    n = 2
+    M1 = np.array([[0, 2], [3, 1]])
+    M2 = np.array([[0,8,2,10],[12,4,14,6],[3,11,1,9],[15,7,13,5]])
 
-        img = imgToFloat(img)
-        for i in range(height):
-                for j in range(width):
-                    a = i % (2*n)
-                    b = j % (2*n)
-                    out_img[i, j] = colorFit(img[i, j] + r * Mpre[a, b], pallet)
+    Mpre = (M2 + 1) / (2*n)**2 - 0.5
 
-        return out_img
+    r = int(np.round(((pallet.max()*255 - pallet.min()*255) / (img.max() - img.min()))))
 
-new_img = dithering(img)
+    img = imgToFloat(img)
+    for i in range(height):
+            for j in range(width):
+                a = i % (2*n)
+                b = j % (2*n)
+                out_img[i, j] = colorFit(img[i, j] + r * Mpre[a, b], pallet)
+
+    return out_img
+    
+def dithering_fs(img, pallet):
+    if (len(img.shape) < 3):
+        height, width = img.shape
+    else:
+        height, width, dim = img.shape
+
+    out_img = img.copy()
+    out_img = imgToFloat(out_img)
+    
+
+    for i in range(height):
+        for j in range(width):
+            oldpixel = out_img[i, j].copy()
+            newpixel = colorFit(oldpixel, pallet)
+            out_img[i, j] = newpixel
+            quant_error = oldpixel - newpixel
+            if(i == (height - 1) and j == (width - 1)):
+                continue
+            elif(i == (height - 1)):
+                out_img[i - 1, j + 1] = out_img[i - 1, j + 1] + quant_error * 3 / 16
+                out_img[i, j + 1] = out_img[i, j + 1] + quant_error * 5 / 16
+            elif(j == (width - 1)):
+                out_img[i + 1, j] = out_img[i + 1, j] + quant_error * 7 / 16
+            else:
+                out_img[i + 1, j] = out_img[i + 1, j] + quant_error * 7 / 16
+                out_img[i - 1, j + 1] = out_img[i - 1, j + 1] + quant_error * 3 / 16
+                out_img[i, j + 1] = out_img[i, j + 1] + quant_error * 5 / 16
+                out_img[i + 1, j + 1] = out_img[i + 1, j + 1] + quant_error * 1 / 16
+    return out_img
+
+new_img = dithering_fs(img, palette8)
 plt.imshow(new_img)
 plt.show()
