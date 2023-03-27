@@ -10,6 +10,8 @@ def imgToFloat(img):
 
 img = plt.imread('./lab4/low_q.jpg', format='jpg')
 
+paleta_g = np.linspace(0,1,64).reshape(3,1)
+
 palette8 = np.array([
         [0.0, 0.0, 0.0,],
         [0.0, 0.0, 1.0,],
@@ -40,7 +42,7 @@ palette16 =  np.array([
         [1.0, 1.0, 0.0,]
 ])
 
-
+palette64 = np.array(sns.color_palette("Spectral", 64))
 palette255 = np.array(sns.color_palette("Spectral", 255))
 # palette255 = np.round(np.array(palette255) * 255).astype(int)
 
@@ -73,10 +75,11 @@ def kwant_colorFit(img, pallet):
 ###
 def dithering_r(img):
     img = imgToFloat(img)
-        
-    height, width = img.shape
+    gray_img = np.dot(img[...,:3], [0.2989, 0.5870, 0.1140])
+
+    height, width = gray_img.shape
     r = np.random.rand(height, width)
-    binary_img = (img >= r) * 1
+    binary_img = (gray_img >= r) * 1
 
     return binary_img
     
@@ -136,6 +139,24 @@ def dithering_fs(img, pallet):
                 out_img[i + 1, j + 1] = out_img[i + 1, j + 1] + quant_error * 1 / 16
     return out_img
 
-new_img = dithering_fs(img, palette8)
+# new_img3 = kwant_colorFit(img, palette16)
+# plt.imshow(new_img3)
+# plt.show()
+
+palette = np.array([[244, 67, 54], [232, 30, 99], [156, 39, 176], [103, 58, 183], 
+           [63, 81, 181], [33, 150, 243], [3, 169, 244], [0, 188, 212],
+           [0, 150, 136], [76, 175, 80], [139, 195, 74], [205, 220, 57], 
+           [255, 235, 59], [255, 193, 7], [255, 152, 0], [255, 87, 34],
+           [121, 85, 72], [158, 158, 158], [96, 125, 139], [0, 0, 0]]) / 255
+new_img = kwant_colorFit(img, palette)
 plt.imshow(new_img)
+plt.show()
+new_img = dithering_r(img)
+plt.imshow(new_img)
+plt.show()
+new_img1 = dithering_o(img, palette)
+plt.imshow(new_img1)
+plt.show()
+new_img2 = dithering_fs(img, palette)
+plt.imshow(new_img2)
 plt.show()
