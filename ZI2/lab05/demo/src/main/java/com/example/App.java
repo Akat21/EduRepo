@@ -1,4 +1,5 @@
 package com.example;
+import java.util.List;
 import java.util.Random;
 
 import com.example.entities.Person;
@@ -15,46 +16,48 @@ public class App
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("mb1");
         EntityManager em = emf.createEntityManager();
 
-        Person p = new Person();
-        Random rand = new Random();
+        //ADD persons
+        for(int i = 0; i < 9; i++){
+            Person p = new Person();
+            Random rand = new Random();
+            
+            int age = rand.nextInt(51);
+            p.setAge(age);
+            p.setFirstName("Jan");
+            p.setFamilyName("Kowalski");
+
+            em.getTransaction().begin();
+            em.persist(p);
+            em.getTransaction().commit();
+        }
+
+        //RESULTS 1
+        Query q = em.createQuery("SELECT p FROM Person p", Person.class);
+        List <Person> people = q.getResultList();
+        for(Person prsn : people){
+            System.out.println(prsn.getFirstName() + " " + prsn.getFamilyName() + " " + prsn.getAge());
+        }
         
-        Query q = em.createQuery ("SELECT count(x) FROM person x");
-        int result = (int) q.getSingleResult ();
-
-        int age = rand.nextInt(51);
-        p.setAge(age);
-        p.setFirstName("Jan");
-        p.setFamilyName("Kowalski");
-
-        Person p1 = new Person();
+        System.out.println("\n");
         
-        age = rand.nextInt(51);
-        p1.setAge(age);
-        p1.setFirstName("Mariusz");
-        p1.setFamilyName("Kowalczyk");
-
-        Person p2 = new Person();
-        
-        age = rand.nextInt(51);
-        p2.setAge(age);
-        p2.setFirstName("Adam");
-        p2.setFamilyName("Nowak");
-
-        em.getTransaction().begin();
-        em.persist(p);
-        em.persist(p1);
-        em.persist(p2);
-        em.getTransaction().commit();
-
-        for (int i = 1; i <= result; i++){
-            Person p3 = em.find(Person.class, i);
-            if (p3.getAge() < 18){
-                p3.setAge(18);
+        //RESULTS 2
+        q = em.createQuery("SELECT p FROM Person p", Person.class);
+        people = q.getResultList();
+        for(Person prsn : people){
+            if (prsn.getAge() < 18 ){
+                prsn.setAge(18);
                 em.getTransaction().begin();
-                em.persist(p3);
+                em.persist(prsn);
                 em.getTransaction().commit();
             }
-            System.out.println(p3.getFirstName() + " " + p3.getFamilyName() + " " + p3.getAge());
+            System.out.println(prsn.getFirstName() + " " + prsn.getFamilyName() + " " + prsn.getAge());
         }
+
+        System.out.println("\n");
+
+        //RESULTS 3
+        q = em.createQuery("SELECT p FROM Person p WHERE p.age > 25", Person.class);
+        people = q.getResultList();
+        System.out.println("Number of people over 25 yo: " + people.size());
     }
 }
