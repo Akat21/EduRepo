@@ -1,13 +1,11 @@
 package com.example;
 
-import main.java.com.example.entities.Klasa;
-import main.java.com.example.entities.Uczen;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.example.entities.Person;
+import com.example.entities.Klasa;
+import com.example.entities.Uczen;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -25,7 +23,7 @@ public class App
         k1.setNazwa("3B");
         k1.setPoziom(3);
 
-        k1.setUczniowie(new ArrayList<>());
+        k1.setUczniowie(new ArrayList<Uczen>());
         Uczen u1 = new Uczen("Khabib", "Nurmagomedov");
         u1.setKlasa(k1);
         Uczen u2 = new Uczen("Mamhed", "Khalidov");
