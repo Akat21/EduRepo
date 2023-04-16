@@ -5,7 +5,7 @@ import scipy.fftpack
 import soundfile as sf
 from scipy.interpolate import interp1d
 
-data, fs = sf.read('./lab5/sin_combined.wav', dtype=np.int32)
+data, fs = sf.read('./lab5/sin_8000Hz.wav', dtype=np.int32)
 print(fs)
 # sin_data = np.sin(np.linspace(0, 10)) 
 # plt.plot(sin_data)
@@ -38,23 +38,27 @@ def Decymacja(data, n, fs):
     return data[::n], fs/n
 
 def InterpLine(data, new_fs):
-    x = np.linspace(0, len(data), len(data))
+    x = np.linspace(0, int(np.round(len(data)/fs)), len(data))
     y = data
+    T = len(data)/fs
     interp = interp1d(x, y)
-    y_lin = interp(np.linspace(0, len(data), new_fs))
+    y_lin = interp(np.linspace(0, int(np.round(len(data)/fs)), int(np.ceil(new_fs*T)))).astype(y.dtype)
     return y_lin, new_fs
 
 def InterpNonLine(data, new_fs):
-    x = np.linspace(0, len(data), len(data))
+    x = np.linspace(0, int(np.round(len(data)/fs)), len(data))
     y = data
-    interp = interp1d(x, y, kind='cubic')
-    y_lin = interp(np.linspace(0, len(data), new_fs))
+    T = len(data)/fs
+    interp = interp1d(x, y)
+    y_lin = interp(np.linspace(0, int(np.round(len(data)/fs)), int(np.ceil(new_fs*T)))).astype(y.dtype)
     return y_lin, new_fs
 
 data, fs = InterpLine(data, 41000)
-# data, fs = InterpNonLine(data, 16950)
-# data, fs = Decymacja(data, 1, fs)
-# data = Kwant(data, 24)
+# data, fs = InterpNonLine(data, 24000)
+# data, fs = Decymacja(data, 6, fs)
+# data = Kwant(data, 8)
+# sd.play(data, fs)
+# status = sd.wait()
 plotAudio(data, fs, [0.005, 0.1])
 # plt.plot(data)
 # plt.show()
